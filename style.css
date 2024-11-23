@@ -1,0 +1,90 @@
+/* Apply a gray theme with Apple system font */
+body {
+    background-color: #2E2E2E;
+    color: #D3D3D3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.8;
+    font-size: 1.5em;
+}
+
+header {
+    background-color: #3A3A3A;
+    padding: 30px;
+    text-align: center;
+    border-bottom: 1px solid #4A4A4A;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    color: #FFFFFF;
+    font-weight: 700;
+}
+
+nav {
+    background-color: #3A3A3A;
+    padding: 15px;
+    text-align: center;
+}
+
+nav a {
+    color: #D3D3D3;
+    text-decoration: none;
+    margin: 0 20px;
+    font-size: 1.5em;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+    border-bottom: 2px solid transparent;
+    font-weight: 600;
+}
+
+nav a:hover {
+    color: #FFFFFF;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+
+/* New .foto class */
+.foto {
+    display: block;
+    margin: 20px auto;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #D3D3D3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.foto:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.about {
+    text-align: left;
+    margin: 20px;
+    float: left;
+    width: 700px;
+}
+
+.projekty {
+    text-align: left;
+    margin: 20px;
+    width: 700px;
+    float: right;
+}
+
+.contact {
+    text-align: left;
+    margin: 20px;
+    float: left;
+    width: 700px;
+}
+main {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
