@@ -30,9 +30,6 @@ This portfolio website is designed to highlight my professional journey, includi
 
 - HTML
 - CSS
-- JavaScript
-- React
-- Node.js
 
 ## Installation
 
