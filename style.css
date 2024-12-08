@@ -1,8 +1,7 @@
 body {
-  background-color: black;
-  background-image: linear-gradient(to right, #3a3a3a 2px, transparent 2px),
-    linear-gradient(to bottom, #3a3a3a 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-color: #5c5c5c;
+  opacity: 1;
+  background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #5c5c5c 40px ), repeating-linear-gradient( #3b3b3b55, #3b3b3b );
   color: #d3d3d3;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
@@ -19,6 +18,14 @@ body {
   justify-content: center;
   align-items: flex-start;
 }
+.container1{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+
 header {
   background-color: #3a3a3a;
   padding: 30px;
@@ -57,12 +64,11 @@ nav a:hover {
   border-bottom: 2px solid #ffffff;
 }
 
-/* New .foto class */
 .foto {
   display: block;
   margin: 20px auto;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
   border: 5px solid #d3d3d3;
@@ -86,9 +92,18 @@ nav a:hover {
   text-align: left;
   margin: 20px;
   width: 400px;
-  float: right;
+  background-color: rgba(39, 39, 39, 0.507);
+  padding: 30px;
+  border-radius: 50px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
-
+.projekty:hover {
+  background-color: rgba(39, 39, 39, 0.8);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
 .contact {
   text-align: left;
   margin: 20px;
