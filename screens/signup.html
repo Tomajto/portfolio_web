@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Založení účtu | Tomáš Richtr</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+    <link rel="stylesheet" href="/styles/login.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container navbar">
+        <a href="../index.html" class="logo">Richtr</a>
+        <nav class="nav-links">
+          <a href="../index.html#overview">Overview</a>
+          <a href="../index.html#features">Features</a>
+          <a href="../index.html#photos">Photos</a>
+          <a href="../index.html#aboutme">About me</a>
+        </nav>
+        <a href="#" class="btn-order" style="pointer-events: none; opacity: 0.7"
+          >Sign up</a
+        >
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <ul>
+          <li><a href="../index.html#overview">Overview</a></li>
+          <li><a href="../index.html#features">Features</a></li>
+          <li><a href="../index.html#photos">Photos</a></li>
+          <li><a href="../index.html#aboutme">About me</a></li>
+          <li>
+            <a
+              href="#"
+              class="btn-order"
+              style="
+                padding: 0.5rem 1rem;
+                margin-top: 1rem;
+                pointer-events: none;
+                opacity: 0.7;
+              "
+              >Sign up</a
+            >
+          </li>
+        </ul>
+      </div>
+    </header>
+    <main>
+      <div class="login-container">
+        <div class="login-title">Sign up</div>
+        <form class="login-form" autocomplete="off">
+          <div>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="username"
+            />
+          </div>
+          <div>
+            <label for="email">Confirm Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="username"
+            />
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+          <button type="submit" class="login-btn">Sign up</button>
+        </form>
+        <div class="login-links">
+          <p>
+            By signing up, you agree to our
+            <a href="/screens/terms.html">Terms of Service</a> and
+            <a href="/screens/privacy.html">Privacy Policy</a>.
+          </p>
+          <p>
+            Already have an account?
+            <a href="/screens/login.html">Log back in</a>
+          </p>
+        </div>
+      </div>
+    </main>
+    <script>
+      const hamburger = document.getElementById("hamburger");
+      const mobileMenu = document.getElementById("mobileMenu");
+      let isOpen = false;
+
+      hamburger.addEventListener("click", () => {
+        isOpen = !isOpen;
+        if (isOpen) {
+          mobileMenu.classList.add("open");
+          hamburger.children[0].style.transform =
+            "rotate(45deg) translateY(8px)";
+          hamburger.children[1].style.opacity = "0";
+          hamburger.children[2].style.transform =
+            "rotate(-45deg) translateY(-8px)";
+        } else {
+          mobileMenu.classList.remove("open");
+          hamburger.children[0].style.transform = "rotate(0) translateY(0)";
+          hamburger.children[1].style.opacity = "1";
+          hamburger.children[2].style.transform = "rotate(0) translateY(0)";
+        }
+      });
+    </script>
+  </body>
+</html>
