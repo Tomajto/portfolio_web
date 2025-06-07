@@ -32,7 +32,7 @@
         $host = 'localhost';
         $dbname = 'portfoliodb';
         $username = 'root';
-        $password = 'yourpassword'; // ← replace this
+        $password = 'petrpavel397'; // ← replace this
 
         $conn = new mysqli($host, $username, $password, $dbname);
 
