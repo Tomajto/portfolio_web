@@ -31,7 +31,7 @@
         <?php
         $host = 'localhost';
         $dbname = 'portfoliodb';
-        $username = 'root';
+        $username = 'tomajto';
         $password = 'petrpavel397'; // ← replace this
 
         $conn = new mysqli($host, $username, $password, $dbname);
