@@ -12,11 +12,4 @@ try {
     echo "<h3>" . $e->getMessage() . "</h3>";
     exit;
 }
-
-
-
-if ($conn) {
-    echo "Connection Successful";
-    echo "Connected to database '$dbname' as user '$username'";
-}
 ?>
