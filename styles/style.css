@@ -79,6 +79,22 @@ header {
   background-color: #4c1d95;
 }
 
+.btn-order-mobile {
+  background-color: #6b21a8;
+  color: #fff !important;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-order-mobile:hover {
+  background-color: #4c1d95;
+}
+
+
 /* Hamburger menu (mobil) */
 .hamburger {
   display: none;
