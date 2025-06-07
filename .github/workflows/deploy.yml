@@ -1,4 +1,4 @@
-name: Deploy to VPS via FTP
+name: Deploy to VPS via SFTP
 
 on:
   push:
@@ -6,18 +6,18 @@ on:
       - main
 
 jobs:
-  ftp-deploy:
-    name: FTP Deploy
+  sftp-deploy:
+    name: SFTP Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      - name: Deploy via SFTP
+        uses: Creepios/sftp-action@v1
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /home/tomajto/html/
-
+          host: ${{ secrets.SFTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          localPath: './'
+          remotePath: '/var/www/html/'
