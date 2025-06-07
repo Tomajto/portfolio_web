@@ -58,7 +58,7 @@
     <main>
       <div class="login-container">
         <div class="login-title">Sign up</div>
-        <form class="login-form" autocomplete="off">
+        <form class="login-form" autocomplete="off" action="/scripts/php/signin.php" method="POST">
           <div>
             <label for="email">Email</label>
             <input
@@ -74,7 +74,7 @@
             <input
               type="email"
               id="email"
-              name="email"
+              name="complete-email"
               required
               autocomplete="username"
             />

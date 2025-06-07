@@ -5,16 +5,18 @@ $username = getenv('DB_USER');
 $password = getenv('DB_PASS');
 $conn = "";
 
-$conn = mysqli_connect($host, $username, $password, $dbname);
+try {
+    $conn = mysqli_connect($host, $username, $password, $dbname);
+} catch (Exception $e) {
+    echo "Connection Failed";
+    echo "<h3>" . $e->getMessage() . "</h3>";
+    exit;
+}
 
 
 
 if ($conn) {
-    echo "<h2>✅ Connection Successful</h2>";
-    echo "<h3>Connected to database '$dbname' as user '$username'</h3>";
-}
-else {
-    echo "<h2>❌ Connection Failed</h2>";
-    echo "<h3>" . mysqli_connect_error() . "</h3>";
+    echo "Connection Successful";
+    echo "Connected to database '$dbname' as user '$username'";
 }
 ?>
