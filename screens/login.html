@@ -81,31 +81,11 @@
           <button type="submit" class="login-btn">Log in</button>
         </form>
         <div class="login-links">
-          <a href="#">Forgot password?</a> | <a href="/screens/signup.html">Create account</a>
+          <a href="#">Forgot password?</a> |
+          <a href="/screens/signup.html">Create account</a>
         </div>
       </div>
     </main>
-    <script>
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobileMenu");
-      let isOpen = false;
-
-      hamburger.addEventListener("click", () => {
-        isOpen = !isOpen;
-        if (isOpen) {
-          mobileMenu.classList.add("open");
-          hamburger.children[0].style.transform =
-            "rotate(45deg) translateY(8px)";
-          hamburger.children[1].style.opacity = "0";
-          hamburger.children[2].style.transform =
-            "rotate(-45deg) translateY(-8px)";
-        } else {
-          mobileMenu.classList.remove("open");
-          hamburger.children[0].style.transform = "rotate(0) translateY(0)";
-          hamburger.children[1].style.opacity = "1";
-          hamburger.children[2].style.transform = "rotate(0) translateY(0)";
-        }
-      });
-    </script>
+    <script src="/scripts/hamburger.js"></script>
   </body>
 </html>

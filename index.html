@@ -64,68 +64,7 @@
         <p>Accelerometer</p>
       </div>
     </section>
-
-    <script>
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobileMenu");
-      let isOpen = false;
-
-      hamburger.addEventListener("click", () => {
-        isOpen = !isOpen;
-        if (isOpen) {
-          mobileMenu.classList.add("open");
-          // změna hamburger ikony na křížek
-          hamburger.children[0].style.transform =
-            "rotate(45deg) translateY(8px)";
-          hamburger.children[1].style.opacity = "0";
-          hamburger.children[2].style.transform =
-            "rotate(-45deg) translateY(-8px)";
-        } else {
-          mobileMenu.classList.remove("open");
-          hamburger.children[0].style.transform = "rotate(0) translateY(0)";
-          hamburger.children[1].style.opacity = "1";
-          hamburger.children[2].style.transform = "rotate(0) translateY(0)";
-        }
-      });
-
-      const words = ["work", "school", "home"];
-      let wordIndex = 0;
-      let letterIndex = 0;
-      let isDeleting = false;
-      const dynamicWord = document.getElementById("dynamic-word");
-
-      function typeEffect() {
-        const currentWord = words[wordIndex];
-        if (!isDeleting) {
-          // Typing
-          letterIndex++;
-          dynamicWord.textContent = currentWord.substring(0, letterIndex);
-          if (letterIndex === currentWord.length) {
-            setTimeout(() => {
-              isDeleting = true;
-              typeEffect();
-            }, 3000);
-          } else {
-            setTimeout(typeEffect, 350);
-          }
-        } else {
-          // Deleting
-          letterIndex--;
-          dynamicWord.textContent = currentWord.substring(0, letterIndex);
-          if (letterIndex === 0) {
-            isDeleting = false;
-            wordIndex = (wordIndex + 1) % words.length;
-            setTimeout(typeEffect, 400);
-          } else {
-            setTimeout(typeEffect, 60);
-          }
-        }
-      }
-
-      // Start the animation after page load
-      window.addEventListener("DOMContentLoaded", () => {
-        setTimeout(typeEffect, 1200);
-      });
-    </script>
+    <script src="scripts/hamburger.js"></script>
+    <script src="scripts/typing.js"></script>
   </body>
 </html>

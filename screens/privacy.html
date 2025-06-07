@@ -55,59 +55,56 @@
       </div>
     </header>
     <main>
-      <div class="login-container" style="max-width: 700px; align-items: flex-start;">
-        <div class="login-title" style="margin-bottom: 1rem;">Privacy Policy</div>
-        <div style="color: #444; font-size: 1rem; line-height: 1.7;">
+      <div
+        class="login-container"
+        style="max-width: 700px; align-items: flex-start"
+      >
+        <div class="login-title" style="margin-bottom: 1rem">
+          Privacy Policy
+        </div>
+        <div style="color: #444; font-size: 1rem; line-height: 1.7">
           <p>
-            Your privacy is important to us. This page describes how your personal data is collected, used, and protected when using the Tomáš Richtr website.
+            Your privacy is important to us. This page describes how your
+            personal data is collected, used, and protected when using the Tomáš
+            Richtr website.
           </p>
-          <ol style="margin-left: 1.2em; margin-bottom: 1.2em;">
+          <ol style="margin-left: 1.2em; margin-bottom: 1.2em">
             <li>
-              <strong>Data Collection:</strong> We may collect basic information such as your email address that you provide during registration or when using our services.
+              <strong>Data Collection:</strong> We may collect basic information
+              such as your email address that you provide during registration or
+              when using our services.
             </li>
             <li>
-              <strong>Use of Data:</strong> Your data is used solely for providing and improving our services, communication, and account security.
+              <strong>Use of Data:</strong> Your data is used solely for
+              providing and improving our services, communication, and account
+              security.
             </li>
             <li>
-              <strong>Data Protection:</strong> Your data is protected using modern security measures and is not shared with third parties without your consent, unless required by law.
+              <strong>Data Protection:</strong> Your data is protected using
+              modern security measures and is not shared with third parties
+              without your consent, unless required by law.
             </li>
             <li>
-              <strong>Cookies:</strong> The website may use cookies to enhance your user experience. By using the website, you agree to this.
+              <strong>Cookies:</strong> The website may use cookies to enhance
+              your user experience. By using the website, you agree to this.
             </li>
             <li>
-              <strong>Your Rights:</strong> You have the right to request access to, correction, or deletion of your personal data. Please contact us if you have any questions.
+              <strong>Your Rights:</strong> You have the right to request access
+              to, correction, or deletion of your personal data. Please contact
+              us if you have any questions.
             </li>
           </ol>
           <p>
-            By using this service, you confirm that you have read and understand this privacy policy.
+            By using this service, you confirm that you have read and understand
+            this privacy policy.
           </p>
         </div>
-        <div class="login-links" style="margin-top: 2rem;">
-          <a href="/screens/signup.html">Back to registration</a> | <a href="../index.html">Home</a>
+        <div class="login-links" style="margin-top: 2rem">
+          <a href="/screens/signup.html">Back to registration</a> |
+          <a href="../index.html">Home</a>
         </div>
       </div>
     </main>
-    <script>
-      const hamburger = document.getElementById("hamburger");
-      const mobileMenu = document.getElementById("mobileMenu");
-      let isOpen = false;
-
-      hamburger.addEventListener("click", () => {
-        isOpen = !isOpen;
-        if (isOpen) {
-          mobileMenu.classList.add("open");
-          hamburger.children[0].style.transform =
-            "rotate(45deg) translateY(8px)";
-          hamburger.children[1].style.opacity = "0";
-          hamburger.children[2].style.transform =
-            "rotate(-45deg) translateY(-8px)";
-        } else {
-          mobileMenu.classList.remove("open");
-          hamburger.children[0].style.transform = "rotate(0) translateY(0)";
-          hamburger.children[1].style.opacity = "1";
-          hamburger.children[2].style.transform = "rotate(0) translateY(0)";
-        }
-      });
-    </script>
+    <script src="/scripts/hamburger.js"></script>
   </body>
 </html>
