@@ -1,5 +1,5 @@
 <?php
-$host = '185.180.3.139';
+$host = 'localhost'; // Database host
 $dbname = getenv('DB_NAME'); 
 $username = getenv('DB_USER');   
 $password = getenv('DB_PASS');
