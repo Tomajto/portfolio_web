@@ -1,3 +1,8 @@
+<?php
+require_once '../includes/config_session.inc.php';
+require_once '../includes/signup_view.inc.php';
+?>
+
 <!DOCTYPE html>
 <html lang="cs">
   <head>
@@ -58,24 +63,22 @@
     <main>
       <div class="login-container">
         <div class="login-title">Sign up</div>
-        <form class="login-form" autocomplete="off" action="/scripts/php/signin.php" method="POST">
+        <form class="login-form" autocomplete="off" action="/includes/signup.inc.php" method="POST">
           <div>
             <label for="email">Username</label>
             <input
               type="name"
               id="username"
               name="username"
-              required
               autocomplete="username"
             />
           </div>
           <div>
-            <label for="email">Confirm Email</label>
+            <label for="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
-              required
               autocomplete="username"
             />
           </div>
@@ -85,12 +88,14 @@
               type="password"
               id="password"
               name="password"
-              required
               autocomplete="current-password"
             />
           </div>
           <button type="submit" class="login-btn">Sign up</button>
         </form>
+        <?php
+        check_signup_errors();
+        ?>
         <div class="login-links">
           <p>
             By signing up, you agree to our

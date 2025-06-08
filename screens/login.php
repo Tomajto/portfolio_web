@@ -58,14 +58,13 @@
     <main>
       <div class="login-container">
         <div class="login-title">Log in</div>
-        <form class="login-form" autocomplete="off">
+        <form class="login-form" autocomplete="off" action="/includes/login.inc.php" method="post">
           <div>
             <label for="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
-              required
               autocomplete="username"
             />
           </div>
@@ -75,7 +74,6 @@
               type="password"
               id="password"
               name="password"
-              required
               autocomplete="current-password"
             />
           </div>

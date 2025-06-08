@@ -3,10 +3,12 @@ $host = '185.180.3.139';
 $dbname = getenv('DB_NAME'); 
 $username = getenv('DB_USER');   
 $password = getenv('DB_PASS');
-$conn = "";
+$pdo = "";
 
 try {
-    $conn = mysqli_connect($host, $username, $password, $dbname);
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
     echo "Connection Successful to the database: {$dbname} with host {$host}, logged in as {$username}";
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
