@@ -8,9 +8,7 @@ $conn = "";
 try {
     $conn = mysqli_connect($host, $username, $password, $dbname);
     echo "Connection Successful to the database: {$dbname} with host {$host}, logged in as {$username}";
-} catch (Exception $e) {
-    echo "Connection Failed";
-    echo "<h3>" . $e->getMessage() . "</h3>";
-    exit;
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
