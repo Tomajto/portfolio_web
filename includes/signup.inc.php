@@ -6,6 +6,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         require_once 'dbh.inc.php';
+        // Ensure $pdo is initialized as a PDO object
+        $pdo = require_once 'dbh.inc.php';
         require_once 'signup_model.inc.php';
         require_once 'signup_contr.inc.php';
 
@@ -18,18 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (is_email_invalid($email)) {
             $errors["invalid_email"] = "Invalid email used!";
         }
-        if (is_username_taken($pdo1, $username)) {
+        if (is_username_taken($pdo, $username)) {
             $errors["username_taken"] = "Username already taken!";
         }
-        if (is_email_registered($pdo1, $email)) {
+        if (is_email_registered($pdo, $email)) {
             $errors["email_used"] = "Email already registered!";
         }
 
         require_once 'config_session.inc.php';
 
         if ($errors) {
-            $_SESSION["error_signup"] = $errors;
+            $_SESSION["errors_signup"] = $errors;
             header("Location: /screens/signup.php");
+            exit;
         }
 
     } catch (PDOException $e) {
