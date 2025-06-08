@@ -22,9 +22,9 @@
           <a href="#overview">Overview</a>
           <a href="#features">Features</a>
           <a href="#photos">Photos</a>
-          <a href="../index.html#aboutme">About me</a>
+          <a href="../index.php#aboutme">About me</a>
         </nav>
-        <a href="screens/login.html" class="btn-order">Log in</a>
+        <a href="screens/login.php" class="btn-order">Log in</a>
         <div class="hamburger" id="hamburger">
           <span></span>
           <span></span>
@@ -36,10 +36,10 @@
           <li><a href="#overview">Overview</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="#photos">Photos</a></li>
-          <li><a href="../index.html#aboutme">About me</a></li>
+          <li><a href="../index.php#aboutme">About me</a></li>
           <li>
             <a
-              href="screens/login.html"
+              href="screens/login.php"
               class="btn-order-mobile"
               style="padding: 0.5rem 1rem; margin-top: 1rem"
               >Log in</a

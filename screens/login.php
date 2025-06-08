@@ -17,12 +17,12 @@
   <body>
     <header>
       <div class="container navbar">
-        <a href="../index.html" class="logo">Richtr</a>
+        <a href="../index.php" class="logo">Richtr</a>
         <nav class="nav-links">
-          <a href="../index.html#overview">Overview</a>
-          <a href="../index.html#features">Features</a>
-          <a href="../index.html#photos">Photos</a>
-          <a href="../index.html#aboutme">About me</a>
+          <a href="../index.php#overview">Overview</a>
+          <a href="../index.php#features">Features</a>
+          <a href="../index.php#photos">Photos</a>
+          <a href="../index.php#aboutme">About me</a>
         </nav>
         <a href="#" class="btn-order" style="pointer-events: none; opacity: 0.7"
           >Log in</a
@@ -35,10 +35,10 @@
       </div>
       <div class="mobile-menu" id="mobileMenu">
         <ul>
-          <li><a href="../index.html#overview">Overview</a></li>
-          <li><a href="../index.html#features">Features</a></li>
-          <li><a href="../index.html#photos">Photos</a></li>
-          <li><a href="../index.html#aboutme">About me</a></li>
+          <li><a href="../index.php#overview">Overview</a></li>
+          <li><a href="../index.php#features">Features</a></li>
+          <li><a href="../index.php#photos">Photos</a></li>
+          <li><a href="../index.php#aboutme">About me</a></li>
           <li>
             <a
               href="#"
@@ -83,7 +83,7 @@
         </form>
         <div class="login-links">
           <a href="#">Forgot password?</a> |
-          <a href="/screens/signup.html">Create account</a>
+          <a href="/screens/signup.php">Create account</a>
         </div>
       </div>
     </main>
