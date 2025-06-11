@@ -1,8 +1,3 @@
-<?php
-require_once '../includes/config_session.inc.php';
-require_once '../includes/signup_view.inc.php';
-?>
-
 <!DOCTYPE html>
 <html lang="cs">
   <head>
@@ -93,9 +88,6 @@ require_once '../includes/signup_view.inc.php';
           </div>
           <button type="submit" class="login-btn">Sign up</button>
         </form>
-        <?php
-        check_signup_errors();
-        ?>
         <div class="login-links">
           <p>
             By signing up, you agree to our
