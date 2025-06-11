@@ -117,50 +117,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form class="login-form" method="POST" action="">
                 <div>
                     <label for="username">Username</label>
-                    <input 
-                        type="text" 
-                        id="username" 
-                        name="username" 
-                        required 
-                        autocomplete="username"
-                    />
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        required
+                        autocomplete="username" />
                 </div>
                 <div>
                     <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
-                        required 
-                        autocomplete="email"
-                    />
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        autocomplete="email" />
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        name="password" 
-                        required 
-                        autocomplete="new-password"
-                    />
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        required
+                        autocomplete="new-password" />
                 </div>
                 <div>
                     <label for="confirm_password">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        id="confirm_password" 
-                        name="confirm_password" 
-                        required 
-                        autocomplete="new-password"
-                    />
+                    <input
+                        type="password"
+                        id="confirm_password"
+                        name="confirm_password"
+                        required
+                        autocomplete="new-password" />
                 </div>
                 <button type="submit" class="login-btn">Sign up</button>
             </form>
-
             <div class="login-links">
-                <a href="#">Forgot password?</a> |
-                <a href="login.php">Already have an account? Log in</a>
+                <p>
+                    By signing up, you agree to our
+                    <a href="/screens/terms.php">Terms of Service</a> and
+                    <a href="/screens/privacy.php">Privacy Policy</a>.
+                </p>
+                <p>
+                    Already have an account?
+                    <a href="/screens/login.php">Log back in</a>
+                </p>
             </div>
         </div>
     </main>
