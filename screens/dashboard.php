@@ -122,7 +122,7 @@ $stmt->close();
         </div>
     </header>
     <main>
-        <div class="login-container" style="margin-top: 120px; max-width: 600px;">
+        <div class="login-container" style="margin-right:auto; margin-left: auto;">
             <div class="login-title">Dashboard</div>
             
             <?php if ($message): ?>
@@ -146,7 +146,7 @@ $stmt->close();
                                class="file-input" 
                                id="profileInput"
                                onchange="autoUpload()">
-                        <div class="file-input-button">Choose Profile Picture</div>
+                        <div class="login-btn">Choose Profile Picture</div>
                     </div>
                     <div id="uploadStatus" style="margin-top: 1rem; display: none;">
                         <span style="color: #6b21a8; font-weight: 500;">Uploading...</span>
