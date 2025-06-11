@@ -308,3 +308,36 @@ header {
 .file-input-button:hover {
   background-color: #4c1d95;
 }
+/* Add this to the MEDIA QUERIES section at the bottom */
+
+@media (max-width: 768px) {
+  /* Header: zobraz hamburger a skryj běžné odkazy */
+  .nav-links,
+  .btn-order {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+
+  /* Profile picture mobile adjustments - SHOW profile pic on mobile */
+  .profile-pic-nav {
+    display: block; /* Override the previous display: none */
+    width: 35px;
+    height: 35px;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 4.5rem;
+  }
+  .hero-image {
+    width: 90%;
+  }
+
+  /* Features: na dvě a pak pod sebe */
+  .features {
+    flex-direction: column;
+    gap: 2rem;
+  }
+}

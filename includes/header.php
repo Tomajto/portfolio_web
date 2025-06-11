@@ -52,9 +52,7 @@ if ($isLoggedIn) {
             <li><a href="/index.php#photos">Photos</a></li>
             <li><a href="/index.php#aboutme">About me</a></li>
             <li>
-                <?php if ($isLoggedIn): ?>
-                    <a href="<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>dashboard.php" class="btn-order-mobile" style="padding: 0.5rem 1rem; margin-top: 1rem">Dashboard</a>
-                <?php else: ?>
+                <?php if (!$isLoggedIn): ?>
                     <a href="<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>login.php" class="btn-order-mobile" style="padding: 0.5rem 1rem; margin-top: 1rem">Log in</a>
                 <?php endif; ?>
             </li>
