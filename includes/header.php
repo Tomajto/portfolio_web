@@ -60,7 +60,6 @@ if ($isLoggedIn) {
                          alt="Profile" 
                          class="profile-pic-nav"
                          onclick="location.href='<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>dashboard.php'">
-                    <span><?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></span>
                 </li>
             <?php else: ?>
                 <li>
