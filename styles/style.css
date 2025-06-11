@@ -45,7 +45,7 @@ header {
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #6b21a8; /* fialová */
+  color: #6b21a8;
 }
 
 /* Navigace */
@@ -93,7 +93,6 @@ header {
 .btn-order-mobile:hover {
   background-color: #4c1d95;
 }
-
 
 /* Hamburger menu (mobil) */
 .hamburger {
@@ -152,7 +151,7 @@ header {
   text-align: center;
   z-index: 1;
 }
-/* Nápis „listening“ */
+/* Nápis „listening" */
 .hero-title {
   font-size: 8rem;
   font-weight: bold;
@@ -195,54 +194,7 @@ header {
   color: #555;
 }
 
-/* =============== MEDIA QUERIES =============== */
-@media (max-width: 1024px) {
-  .hero-title {
-    font-size: 6rem;
-  }
-}
-@media (max-width: 768px) {
-  /* Header: zobraz hamburger a skryj běžné odkazy */
-  .nav-links,
-  .btn-order {
-    display: none;
-  }
-  .hamburger {
-    display: flex;
-  }
-
-  /* Hero */
-  .hero-title {
-    font-size: 4.5rem;
-  }
-  .hero-image {
-    width: 90%;
-  }
-
-  /* Features: na dvě a pak pod sebe */
-  .features {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-@media (max-width: 480px) {
-  .hero-title {
-    font-size: 3rem;
-  }
-  .features {
-    padding: 2rem 0;
-  }
-  .feature-item h3 {
-    font-size: 1.1rem;
-  }
-  .feature-item p {
-    font-size: 0.9rem;
-  }
-}
-
-
-/* Add this to your existing style.css file */
-
+/* =============== PROFILE PICTURE STYLES =============== */
 .profile-container {
   display: flex;
   align-items: center;
@@ -308,28 +260,22 @@ header {
 .file-input-button:hover {
   background-color: #4c1d95;
 }
-/* Add this to the MEDIA QUERIES section at the bottom */
-
-.mobile-header-left {
-  display: none;
-  align-items: center;
-  gap: 1rem;
-}
 
 /* Mobile profile in expandable menu */
 .mobile-profile {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.8rem;
   padding: 1rem 0;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 0.5rem;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 1rem;
   cursor: pointer;
 }
 
 .profile-pic-mobile {
-  width: 45px;
-  height: 45px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #6b21a8;
@@ -338,8 +284,103 @@ header {
 .mobile-profile span {
   font-weight: 600;
   color: #6b21a8;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
+
+/* =============== LOGIN/SIGNUP STYLES =============== */
+.login-container {
+  background: #fff;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px rgba(107, 33, 168, 0.1);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.login-form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.login-form input {
+  padding: 0.7rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.2s;
+  background: #fafaff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-form input:focus {
+  border: 1.5px solid #6b21a8;
+}
+
+.login-btn {
+  background-color: #6b21a8;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-btn:hover {
+  background-color: #4c1d95;
+}
+
+.login-links {
+  margin-top: 1.2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.login-links a {
+  color: #6b21a8;
+  text-decoration: underline;
+  margin: 0 0.3rem;
+  transition: color 0.2s;
+}
+
+.login-links a:hover {
+  color: #4c1d95;
+}
+
+/* =============== MEDIA QUERIES =============== */
 @media (max-width: 1024px) {
   .hero-title {
     font-size: 6rem;
@@ -365,10 +406,17 @@ header {
     width: 90%;
   }
 
-  /* Features: na dvě a pak pod sebe */
+  /* Features */
   .features {
     flex-direction: column;
     gap: 2rem;
+  }
+
+  /* Login container mobile adjustments */
+  .login-container {
+    padding: 1.5rem 1rem;
+    margin-top: 80px;
+    max-width: 350px;
   }
 }
 
