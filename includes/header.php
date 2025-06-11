@@ -69,4 +69,439 @@ if ($isLoggedIn) {
             <?php endif; ?>
         </ul>
     </div>
-</header>
+</header>* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Manrope", sans-serif;
+  line-height: 1.4;
+  color: #333;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+ul {
+  list-style: none;
+}
+
+/* =============== KONTEJNER PRO CELÝ WEB =============== */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* =============== HEADER / NAVBAR =============== */
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  z-index: 100;
+  border-bottom: 1px solid #e0e0e0;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #6b21a8;
+}
+
+/* Navigace */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+.nav-links a {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  transition: color 0.2s;
+}
+.nav-links a:hover {
+  color: #6b21a8;
+}
+
+/* Tlačítko Order Now */
+.btn-order {
+  background-color: #6b21a8;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-order:hover {
+  background-color: #4c1d95;
+}
+
+.btn-order-mobile {
+  background-color: #6b21a8;
+  color: #fff !important;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-order-mobile:hover {
+  background-color: #4c1d95;
+}
+
+/* Hamburger menu (mobil) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  gap: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* Skryté mobilní menu */
+.mobile-menu {
+  display: none;
+}
+.mobile-menu.open {
+  display: block;
+  background-color: #fff;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.mobile-menu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+.mobile-menu ul a {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* =============== HERO SEKCIE =============== */
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding-top: 70px;
+  background-image: radial-gradient(rgba(128, 128, 128, 0.404) 1px, transparent 0);
+  background-size: 20px 20px;
+  overflow: hidden;
+}
+.hero .hero-content {
+  position: relative;
+  text-align: center;
+  z-index: 1;
+}
+/* Nápis „listening" */
+.hero-title {
+  font-size: 8rem;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: lowercase;
+  background: linear-gradient(90deg, #ec008c 0%, #7700e6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Obrázek sluchátek */
+.hero-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 75%;
+  max-width: 800px;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* =============== SEKCE S POPISKY =============== */
+.features {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 4rem 0;
+}
+.feature-item {
+  flex: 1;
+  text-align: center;
+  padding: 1rem;
+}
+.feature-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #6b21a8;
+}
+.feature-item p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* =============== PROFILE PICTURE STYLES =============== */
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #6b21a8;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.profile-pic-nav:hover {
+  transform: scale(1.1);
+  border-color: #4c1d95;
+}
+
+.profile-pic-dashboard {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem auto;
+  display: block;
+  border: 4px solid #6b21a8;
+}
+
+.upload-section {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.file-input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-input-button {
+  background-color: #6b21a8;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.file-input-button:hover {
+  background-color: #4c1d95;
+}
+
+/* Mobile profile in expandable menu */
+.mobile-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1rem 0;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.profile-pic-mobile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6b21a8;
+}
+
+.mobile-profile span {
+  font-weight: 600;
+  color: #6b21a8;
+  font-size: 1.2rem;
+}
+
+/* =============== LOGIN/SIGNUP STYLES =============== */
+.login-container {
+  background: #fff;
+  border-radius: 32px;
+  box-shadow: 0 8px 32px rgba(107, 33, 168, 0.1);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  margin-top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6b21a8;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+}
+
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.login-form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.login-form input {
+  padding: 0.7rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.2s;
+  background: #fafaff;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-form input:focus {
+  border: 1.5px solid #6b21a8;
+}
+
+.login-btn {
+  background-color: #6b21a8;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-btn:hover {
+  background-color: #4c1d95;
+}
+
+.login-links {
+  margin-top: 1.2rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.login-links a {
+  color: #6b21a8;
+  text-decoration: underline;
+  margin: 0 0.3rem;
+  transition: color 0.2s;
+}
+
+.login-links a:hover {
+  color: #4c1d95;
+}
+
+/* =============== MEDIA QUERIES =============== */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Header: only show logo and hamburger */
+  .nav-links,
+  .btn-order,
+  .profile-container {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hero */
+  .hero-title {
+    font-size: 4.5rem;
+  }
+  .hero-image {
+    width: 90%;
+  }
+
+  /* Features */
+  .features {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  /* Login container mobile adjustments */
+  .login-container {
+    padding: 1.5rem 1rem;
+    margin-top: 80px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  .features {
+    padding: 2rem 0;
+  }
+  .feature-item h3 {
+    font-size: 1.1rem;
+  }
+  .feature-item p {
+    font-size: 0.9rem;
+  }
+}
