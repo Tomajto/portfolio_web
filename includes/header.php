@@ -55,10 +55,10 @@ if ($isLoggedIn) {
             <li><a href="/index.php#aboutme">About me</a></li>
             
             <?php if ($isLoggedIn): ?>
-                <li class="mobile-profile">
+                <li class="profile-container">
                     <img src="<?php echo $userProfilePic ? '/uploads/profile_pics/' . htmlspecialchars($userProfilePic) : '/assets/default-avatar.png'; ?>" 
                          alt="Profile" 
-                         class="profile-pic-mobile"
+                         class="profile-pic-nav"
                          onclick="location.href='<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>dashboard.php'">
                     <span><?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></span>
                 </li>
