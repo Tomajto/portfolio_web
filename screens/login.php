@@ -99,6 +99,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </header>
     <main>
       <div class="login-container" method="post">
+        <?php if ($message): ?>
+            <div class="toast align-items-center text-white 
+            <?php echo $toastClass; ?> border-0" role="alert"
+                aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <?php echo $message; ?>
+                    </div>
+                    <button type="button" class="btn-close
+                    btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                        aria-label="Close"></button>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="login-title">Log in</div>
         <form class="login-form" autocomplete="off" action="/includes/login.inc.php" method="post">
           <div>
@@ -108,6 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               id="email"
               name="email"
               autocomplete="username"
+              method="post"
             />
           </div>
           <div>
@@ -117,6 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               id="password"
               name="password"
               autocomplete="current-password"
+              method="post"
             />
           </div>
           <button type="submit" class="login-btn">Log in</button>
