@@ -1,4 +1,5 @@
 <?php
+// filepath: c:\PROJEKTY\portfolio_web\screens\dashboard.php
 session_start();
 
 // Redirect to login if not logged in
@@ -7,11 +8,71 @@ if (!isset($_SESSION['email'])) {
     exit();
 }
 
-// Get user info from database
 include '../database/db_connection.php';
 $userEmail = $_SESSION['email'];
 
-$stmt = $conn->prepare("SELECT username, email FROM users WHERE email = ?");
+$message = "";
+$messageType = "";
+
+// Handle profile picture upload
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
+    $uploadDir = '../uploads/profile_pics/';
+    
+    // Create directory if it doesn't exist
+    if (!file_exists($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
+    }
+    
+    $file = $_FILES['profile_pic'];
+    $fileName = $file['name'];
+    $fileSize = $file['size'];
+    $fileTmpName = $file['tmp_name'];
+    $fileError = $file['error'];
+    
+    // Get file extension
+    $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    $allowedExt = ['jpg', 'jpeg', 'png', 'gif'];
+    
+    if ($fileError === 0) {
+        if (in_array($fileExt, $allowedExt)) {
+            if ($fileSize < 5000000) { // 5MB limit
+                // Generate unique filename
+                $newFileName = uniqid('profile_', true) . '.' . $fileExt;
+                $fileDestination = $uploadDir . $newFileName;
+                
+                if (move_uploaded_file($fileTmpName, $fileDestination)) {
+                    // Update database
+                    $stmt = $conn->prepare("UPDATE users SET profile_pic = ? WHERE email = ?");
+                    $stmt->bind_param("ss", $newFileName, $userEmail);
+                    
+                    if ($stmt->execute()) {
+                        $message = "Profile picture updated successfully!";
+                        $messageType = "success";
+                    } else {
+                        $message = "Database error occurred.";
+                        $messageType = "error";
+                    }
+                    $stmt->close();
+                } else {
+                    $message = "Failed to upload file.";
+                    $messageType = "error";
+                }
+            } else {
+                $message = "File size too large (max 5MB).";
+                $messageType = "error";
+            }
+        } else {
+            $message = "Invalid file type. Only JPG, JPEG, PNG, and GIF allowed.";
+            $messageType = "error";
+        }
+    } else {
+        $message = "Error uploading file.";
+        $messageType = "error";
+    }
+}
+
+// Get user info from database
+$stmt = $conn->prepare("SELECT username, email, profile_pic FROM users WHERE email = ?");
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -62,9 +123,32 @@ $stmt->close();
         </div>
     </header>
     <main>
-        <div class="login-container" style="margin-top: 120px; max-width: 500px;">
+        <div class="login-container" style="margin-top: 120px; max-width: 600px;">
             <div class="login-title">Dashboard</div>
             
+            <?php if ($message): ?>
+                <div class="message <?php echo $messageType; ?>" style="margin-bottom: 1rem; padding: 0.5rem; border-radius: 5px; <?php echo $messageType === 'error' ? 'background-color: #fee; color: #c33;' : 'background-color: #efe; color: #3c3;'; ?>">
+                    <?php echo htmlspecialchars($message); ?>
+                </div>
+            <?php endif; ?>
+            
+            <!-- Profile Picture Section -->
+            <div class="upload-section">
+                <img src="<?php echo $user['profile_pic'] ? '../uploads/profile_pics/' . htmlspecialchars($user['profile_pic']) : '../assets/default-avatar.png'; ?>" 
+                     alt="Profile Picture" 
+                     class="profile-pic-dashboard">
+                
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="file-input-wrapper">
+                        <input type="file" name="profile_pic" accept="image/*" class="file-input" required>
+                        <div class="file-input-button">Choose Profile Picture</div>
+                    </div>
+                    <br><br>
+                    <button type="submit" class="login-btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Upload Picture</button>
+                </form>
+            </div>
+            
+            <!-- Account Info Section -->
             <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
                 <h3 style="margin-bottom: 1rem; color: #6b21a8;">Your Account Info</h3>
                 <p style="margin-bottom: 0.5rem;"><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>

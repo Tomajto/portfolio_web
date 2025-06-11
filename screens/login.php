@@ -58,42 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  <header>
-    <div class="container navbar">
-      <a href="../index.php" class="logo">Richtr</a>
-      <nav class="nav-links">
-        <a href="../index.php#overview">Overview</a>
-        <a href="../index.php#features">Features</a>
-        <a href="../index.php#photos">Photos</a>
-        <a href="../index.php#aboutme">About me</a>
-      </nav>
-      <a href="#" class="btn-order" style="pointer-events: none; opacity: 0.7">Log in</a>
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <ul>
-        <li><a href="../index.php#overview">Overview</a></li>
-        <li><a href="../index.php#features">Features</a></li>
-        <li><a href="../index.php#photos">Photos</a></li>
-        <li><a href="../index.php#aboutme">About me</a></li>
-        <li>
-          <a
-            href="#"
-            class="btn-order-mobile"
-            style="
-                padding: 0.5rem 1rem;
-                margin-top: 1rem;
-                pointer-events: none;
-                opacity: 0.7;
-              ">Log in</a>
-        </li>
-      </ul>
-    </div>
-  </header>
+  <?php include '../includes/header.php'; ?>
   <main>
     <div class="login-container">
       <div class="login-title">Log in</div>

@@ -15,39 +15,7 @@
   </head>
 
   <body>
-    <header>
-      <div class="container navbar">
-        <a href="#" class="logo">Richtr</a>
-        <nav class="nav-links">
-          <a href="#overview">Overview</a>
-          <a href="#features">Features</a>
-          <a href="#photos">Photos</a>
-          <a href="../index.php#aboutme">About me</a>
-        </nav>
-        <a href="screens/login.php" class="btn-order">Log in</a>
-        <div class="hamburger" id="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="mobile-menu" id="mobileMenu">
-        <ul>
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#features">Features</a></li>
-          <li><a href="#photos">Photos</a></li>
-          <li><a href="../index.php#aboutme">About me</a></li>
-          <li>
-            <a
-              href="screens/login.php"
-              class="btn-order-mobile"
-              style="padding: 0.5rem 1rem; margin-top: 1rem"
-              >Log in</a
-            >
-          </li>
-        </ul>
-      </div>
-    </header>
+    <?php include 'includes/header.php'; ?>
 
     <section class="hero" id="overview">
       <div class="hero-content">

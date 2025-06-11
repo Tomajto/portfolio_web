@@ -239,3 +239,72 @@ header {
     font-size: 0.9rem;
   }
 }
+
+
+/* Add this to your existing style.css file */
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid #6b21a8;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.profile-pic-nav:hover {
+  transform: scale(1.1);
+  border-color: #4c1d95;
+}
+
+.profile-pic-dashboard {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 1rem auto;
+  display: block;
+  border: 4px solid #6b21a8;
+}
+
+.upload-section {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.file-input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-input-button {
+  background-color: #6b21a8;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.file-input-button:hover {
+  background-color: #4c1d95;
+}
