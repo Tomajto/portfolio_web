@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Log in | Richtr</title>
+    <title>Sign up | Richtr</title>
     <link rel="stylesheet" href="/styles/style.css" />
     <link rel="stylesheet" href="/styles/login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a href="../index.php#photos">Photos</a>
                 <a href="../index.php#aboutme">About me</a>
             </nav>
-            <a href="#" class="btn-order" style="pointer-events: none; opacity: 0.7">Log in</a>
+            <a href="#" class="btn-order" style="pointer-events: none; opacity: 0.7">Sign up</a>
             <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
@@ -99,14 +99,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 margin-top: 1rem;
                 pointer-events: none;
                 opacity: 0.7;
-              ">Log in</a>
+              ">Sign up</a>
                 </li>
             </ul>
         </div>
     </header>
     <main>
         <div class="login-container">
-            <div class="login-title">Sign Up</div>
+            <div class="login-title">Sign up</div>
 
             <?php if ($message): ?>
                 <div class="message <?php echo $toastClass; ?>" style="margin-bottom: 1rem; padding: 0.5rem; border-radius: 5px; <?php echo $toastClass === 'error' ? 'background-color: #fee; color: #c33;' : 'background-color: #efe; color: #3c3;'; ?>">
@@ -117,28 +117,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form class="login-form" method="POST" action="">
                 <div>
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required />
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        autocomplete="username"
+                    />
                 </div>
                 <div>
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required />
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        required 
+                        autocomplete="email"
+                    />
                 </div>
                 <div>
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required />
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        required 
+                        autocomplete="new-password"
+                    />
                 </div>
                 <div>
                     <label for="confirm_password">Confirm Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" required />
+                    <input 
+                        type="password" 
+                        id="confirm_password" 
+                        name="confirm_password" 
+                        required 
+                        autocomplete="new-password"
+                    />
                 </div>
-                <button type="submit" class="login-btn">Sign Up</button>
+                <button type="submit" class="login-btn">Sign up</button>
             </form>
 
             <div class="login-links">
+                <a href="#">Forgot password?</a> |
                 <a href="login.php">Already have an account? Log in</a>
             </div>
         </div>
     </main>
+    <script src="/scripts/hamburger.js"></script>
 </body>
 
 </html>
