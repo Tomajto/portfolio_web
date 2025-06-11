@@ -55,7 +55,7 @@ if ($isLoggedIn) {
             <li><a href="/index.php#aboutme">About me</a></li>
             
             <?php if ($isLoggedIn): ?>
-                <li class="profile-container">
+                <li class="profile-container-mobile">
                     <img src="<?php echo $userProfilePic ? '/uploads/profile_pics/' . htmlspecialchars($userProfilePic) : '/assets/default-avatar.png'; ?>" 
                          alt="Profile" 
                          class="profile-pic-nav"
