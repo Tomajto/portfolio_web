@@ -87,7 +87,6 @@ $stmt->close();
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard | Richtr</title>
     <link rel="stylesheet" href="/styles/style.css" />
-    <link rel="stylesheet" href="/styles/login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
@@ -136,15 +135,22 @@ $stmt->close();
             <div class="upload-section">
                 <img src="<?php echo $user['profile_pic'] ? '../uploads/profile_pics/' . htmlspecialchars($user['profile_pic']) : '../assets/default-avatar.png'; ?>" 
                      alt="Profile Picture" 
-                     class="profile-pic-dashboard">
+                     class="profile-pic-dashboard"
+                     id="profilePreview">
                 
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" id="profileForm">
                     <div class="file-input-wrapper">
-                        <input type="file" name="profile_pic" accept="image/*" class="file-input" required>
+                        <input type="file" 
+                               name="profile_pic" 
+                               accept="image/*" 
+                               class="file-input" 
+                               id="profileInput"
+                               onchange="autoUpload()">
                         <div class="file-input-button">Choose Profile Picture</div>
                     </div>
-                    <br><br>
-                    <button type="submit" class="login-btn" style="font-size: 0.9rem; padding: 0.5rem 1rem;">Upload Picture</button>
+                    <div id="uploadStatus" style="margin-top: 1rem; display: none;">
+                        <span style="color: #6b21a8; font-weight: 500;">Uploading...</span>
+                    </div>
                 </form>
             </div>
             
@@ -160,6 +166,32 @@ $stmt->close();
             </div>
         </div>
     </main>
+    
+    <script>
+        function autoUpload() {
+            const fileInput = document.getElementById('profileInput');
+            const form = document.getElementById('profileForm');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const profilePreview = document.getElementById('profilePreview');
+            
+            if (fileInput.files && fileInput.files[0]) {
+                // Show upload status
+                uploadStatus.style.display = 'block';
+                
+                // Preview the selected image
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+                
+                // Auto-submit the form
+                setTimeout(() => {
+                    form.submit();
+                }, 500); // Small delay to show the preview
+            }
+        }
+    </script>
     <script src="/scripts/hamburger.js"></script>
 </body>
 </html>
