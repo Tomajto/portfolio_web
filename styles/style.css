@@ -340,22 +340,21 @@ header {
   color: #6b21a8;
   font-size: 1.1rem;
 }
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 6rem;
+  }
+}
+
 @media (max-width: 768px) {
-  /* Show mobile header layout */
-  .mobile-header-left {
-    display: flex;
-  }
-  
-  /* Hide desktop hamburger positioning */
-  .navbar > .hamburger {
-    display: none;
-  }
-  
-  /* Header: zobraz hamburger a skryj běžné odkazy */
+  /* Header: only show logo and hamburger */
   .nav-links,
   .btn-order,
   .profile-container {
     display: none;
+  }
+  .hamburger {
+    display: flex;
   }
 
   /* Hero */
@@ -370,5 +369,20 @@ header {
   .features {
     flex-direction: column;
     gap: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  .features {
+    padding: 2rem 0;
+  }
+  .feature-item h3 {
+    font-size: 1.1rem;
+  }
+  .feature-item p {
+    font-size: 0.9rem;
   }
 }
