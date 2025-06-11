@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\PROJEKTY\portfolio_web\screens\signup.php
 session_start();
 include '../database/db_connection.php';
 
@@ -36,8 +35,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sss", $username, $email, $hashed_password);
             
             if ($stmt->execute()) {
-                $message = "Registration successful! You can now log in.";
-                $toastClass = "success";
+                // Set session variables and redirect to dashboard
+                $_SESSION['email'] = $email;
+                $_SESSION['username'] = $username;
+                header("Location: dashboard.php");
+                exit();
             } else {
                 $message = "Registration failed. Please try again.";
                 $toastClass = "error";

@@ -1,5 +1,6 @@
 <?php
-include '../database/db_connect.php';
+session_start();
+include '../database/db_connection.php';
 
 $message = "";
 $toastClass = "";
@@ -8,35 +9,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Prepare and execute
-    $stmt = $conn->prepare("SELECT password FROM userdata WHERE email = ?");
+    // Prepare and execute - get both username and password
+    $stmt = $conn->prepare("SELECT username, password FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->store_result();
+    $result = $stmt->get_result();
 
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($db_password);
-        $stmt->fetch();
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $db_password = $user['password'];
+        $username = $user['username'];
 
-        if ($password === $db_password) {
-            $message = "Login successful";
-            $toastClass = "bg-success";
-            // Start the session and redirect to the dashboard or home page
-            session_start();
+        // Check if password is hashed or plain text
+        if (password_verify($password, $db_password) || $password === $db_password) {
+            // Login successful
             $_SESSION['email'] = $email;
+            $_SESSION['username'] = $username;
             header("Location: dashboard.php");
             exit();
         } else {
             $message = "Incorrect password";
-            $toastClass = "bg-danger";
+            $toastClass = "error";
         }
     } else {
         $message = "Email not found";
-        $toastClass = "bg-warning";
+        $toastClass = "error";
     }
 
     $stmt->close();
-    $conn->close();
 }
 ?>
 
@@ -98,31 +98,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </header>
     <main>
-      <div class="login-container" method="post">
+      <div class="login-container">
+        <div class="login-title">Log in</div>
+        
         <?php if ($message): ?>
-            <div class="toast align-items-center text-white 
-            <?php echo $toastClass; ?> border-0" role="alert"
-                aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <?php echo $message; ?>
-                    </div>
-                    <button type="button" class="btn-close
-                    btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-                        aria-label="Close"></button>
-                </div>
+            <div class="message <?php echo $toastClass; ?>" style="margin-bottom: 1rem; padding: 0.5rem; border-radius: 5px; <?php echo $toastClass === 'error' ? 'background-color: #fee; color: #c33;' : 'background-color: #efe; color: #3c3;'; ?>">
+                <?php echo htmlspecialchars($message); ?>
             </div>
         <?php endif; ?>
-        <div class="login-title">Log in</div>
-        <form class="login-form" autocomplete="off" action="/includes/login.inc.php" method="post">
+        
+        <form class="login-form" method="POST" action="">
           <div>
             <label for="email">Email</label>
             <input
               type="email"
               id="email"
               name="email"
+              required
               autocomplete="username"
-              method="post"
             />
           </div>
           <div>
@@ -131,8 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               type="password"
               id="password"
               name="password"
+              required
               autocomplete="current-password"
-              method="post"
             />
           </div>
           <button type="submit" class="login-btn">Log in</button>

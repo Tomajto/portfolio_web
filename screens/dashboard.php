@@ -1,17 +1,22 @@
 <?php
 session_start();
-// Check if the user is logged in, if
-// not then redirect them to the login page
-if (isset($_SESSION['email'])) {
-    $userEmail = $_SESSION['email'];
-} else {
-    header("Location: login.php");
-    exit();
-}
+
+// Redirect to login if not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
 }
+
+// Get user info from database
+include '../database/db_connection.php';
+$userEmail = $_SESSION['email'];
+
+$stmt = $conn->prepare("SELECT username, email FROM users WHERE email = ?");
+$stmt->bind_param("s", $userEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -57,13 +62,17 @@ if (!isset($_SESSION['email'])) {
         </div>
     </header>
     <main>
-        <div class="login-container" style="margin-top: 120px;">
-            <div class="login-title">Welcome!</div>
-            <p style="font-size:1.1rem; margin-bottom:1.5rem;">
-                You are logged in as <strong><?php echo htmlspecialchars($userEmail); ?></strong>.
-            </p>
+        <div class="login-container" style="margin-top: 120px; max-width: 500px;">
+            <div class="login-title">Dashboard</div>
+            
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                <h3 style="margin-bottom: 1rem; color: #6b21a8;">Your Account Info</h3>
+                <p style="margin-bottom: 0.5rem;"><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
+                <p style="margin-bottom: 0;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+            </div>
+            
             <div class="login-links">
-                <a href="./logout.php" type="submit">Log out</a>
+                <a href="logout.php">Log out</a> | <a href="../index.php">Go to Home</a>
             </div>
         </div>
     </main>
