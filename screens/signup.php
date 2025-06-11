@@ -63,7 +63,7 @@ require_once '../includes/signup_view.inc.php';
     <main>
       <div class="login-container">
         <div class="login-title">Sign up</div>
-        <form class="login-form" autocomplete="off" action="/includes/signup.inc.php" method="POST">
+        <form class="login-form" autocomplete="off" action="" method="POST">
           <div>
             <label for="email">Username</label>
             <input
