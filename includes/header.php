@@ -20,7 +20,15 @@ if ($isLoggedIn) {
 
 <header>
     <div class="container navbar">
-        <a href="/index.php" class="logo">Richtr</a>
+        <div class="mobile-header-left">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="/index.php" class="logo">Richtr</a>
+        </div>
+        
         <nav class="nav-links">
             <a href="/index.php#overview">Overview</a>
             <a href="/index.php#features">Features</a>
@@ -38,15 +46,19 @@ if ($isLoggedIn) {
         <?php else: ?>
             <a href="<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>login.php" class="btn-order">Log in</a>
         <?php endif; ?>
-        
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
     </div>
+    
     <div class="mobile-menu" id="mobileMenu">
         <ul>
+            <?php if ($isLoggedIn): ?>
+                <li class="mobile-profile">
+                    <img src="<?php echo $userProfilePic ? '/uploads/profile_pics/' . htmlspecialchars($userProfilePic) : '/assets/default-avatar.png'; ?>" 
+                         alt="Profile" 
+                         class="profile-pic-mobile"
+                         onclick="location.href='<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>dashboard.php'">
+                    <span><?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?></span>
+                </li>
+            <?php endif; ?>
             <li><a href="/index.php#overview">Overview</a></li>
             <li><a href="/index.php#features">Features</a></li>
             <li><a href="/index.php#photos">Photos</a></li>
@@ -54,6 +66,8 @@ if ($isLoggedIn) {
             <li>
                 <?php if (!$isLoggedIn): ?>
                     <a href="<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>login.php" class="btn-order-mobile" style="padding: 0.5rem 1rem; margin-top: 1rem">Log in</a>
+                <?php else: ?>
+                    <a href="<?php echo strpos($_SERVER['PHP_SELF'], '/screens/') !== false ? '' : 'screens/'; ?>logout.php" class="btn-order-mobile" style="padding: 0.5rem 1rem; margin-top: 1rem; background-color: #dc3545;">Log out</a>
                 <?php endif; ?>
             </li>
         </ul>

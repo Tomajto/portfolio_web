@@ -310,21 +310,52 @@ header {
 }
 /* Add this to the MEDIA QUERIES section at the bottom */
 
+.mobile-header-left {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Mobile profile in expandable menu */
+.mobile-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+.profile-pic-mobile {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6b21a8;
+}
+
+.mobile-profile span {
+  font-weight: 600;
+  color: #6b21a8;
+  font-size: 1.1rem;
+}
 @media (max-width: 768px) {
-  /* Header: zobraz hamburger a skryj běžné odkazy */
-  .nav-links,
-  .btn-order {
-    display: none;
-  }
-  .hamburger {
+  /* Show mobile header layout */
+  .mobile-header-left {
     display: flex;
   }
-
-  /* Profile picture mobile adjustments - SHOW profile pic on mobile */
-  .profile-pic-nav {
-    display: block; /* Override the previous display: none */
-    width: 35px;
-    height: 35px;
+  
+  /* Hide desktop hamburger positioning */
+  .navbar > .hamburger {
+    display: none;
+  }
+  
+  /* Header: zobraz hamburger a skryj běžné odkazy */
+  .nav-links,
+  .btn-order,
+  .profile-container {
+    display: none;
   }
 
   /* Hero */
