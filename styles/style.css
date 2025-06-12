@@ -385,6 +385,27 @@ header {
   color: #4c1d95;
 }
 
+/* Leaderboard table */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+}
+.leaderboard-table thead {
+  background: #f5f5fa;
+}
+.leaderboard-table th {
+  font-weight: 600;
+  color: #333;
+}
+
 /* =============== MEDIA QUERIES =============== */
 @media (max-width: 1024px) {
   .hero-title {
@@ -442,3 +463,4 @@ header {
     font-size: 0.9rem;
   }
 }
+
