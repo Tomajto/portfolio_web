@@ -23,10 +23,10 @@ if ($isLoggedIn) {
         <a href="/index.php" class="logo">Richtr</a>
         
         <nav class="nav-links">
-            <a href="/index.php#overview">Slots</a>
-            <a href="/index.php#features">Ride the bus</a>
-            <a href="/index.php#photos">Roulette</a>
-            <a href="/index.php#aboutme">Leaderboard</a>
+            <a href="../screens/leaderboard.php">Slots</a>
+            <a href="../screens/leaderboard.php">Ride the bus</a>
+            <a href="../screens/leaderboard.php">Roulette</a>
+            <a href="../screens/leaderboard.php">Leaderboard</a>
         </nav>
         
         <?php if ($isLoggedIn): ?>
