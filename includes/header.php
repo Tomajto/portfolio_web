@@ -23,10 +23,10 @@ if ($isLoggedIn) {
         <a href="/index.php" class="logo">Richtr</a>
         
         <nav class="nav-links">
-            <a href="/index.php#overview">Overview</a>
-            <a href="/index.php#features">Features</a>
-            <a href="/index.php#photos">Photos</a>
-            <a href="/index.php#aboutme">About me</a>
+            <a href="/index.php#overview">Slots</a>
+            <a href="/index.php#features">Ride the bus</a>
+            <a href="/index.php#photos">Roulette</a>
+            <a href="/index.php#aboutme">Leaderboard</a>
         </nav>
         
         <?php if ($isLoggedIn): ?>
@@ -49,10 +49,10 @@ if ($isLoggedIn) {
     
     <div class="mobile-menu" id="mobileMenu">
         <ul>
-            <li><a href="/index.php#overview">Overview</a></li>
-            <li><a href="/index.php#features">Features</a></li>
-            <li><a href="/index.php#photos">Photos</a></li>
-            <li><a href="/index.php#aboutme">About me</a></li>
+            <li><a href="../screens/leaderboard.php">Slots</a></li>
+            <li><a href="../screens/leaderboard.php">Ride the bus</a></li>
+            <li><a href="../screens/leaderboard.php">Roulette</a></li>
+            <li><a href="../screens/leaderboard.php">Leaderboard</a></li>
             
             <?php if ($isLoggedIn): ?>
                 <li class="profile-container-mobile">

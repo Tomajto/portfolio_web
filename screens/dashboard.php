@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\PROJEKTY\portfolio_web\screens\dashboard.php
 session_start();
 
 // Redirect to login if not logged in
