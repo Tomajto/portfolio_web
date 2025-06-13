@@ -33,7 +33,7 @@
         <p>Accelerometer</p>
       </div>
     </section>
-    <?php include 'includes/footer.php'; ?>
+    <?php include './includes/footer.php'; ?>
     <script src="scripts/hamburger.js"></script>
     <script src="scripts/typing.js"></script>
   </body>

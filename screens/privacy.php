@@ -16,10 +16,8 @@
 
 <body>
   <?php include '../includes/header.php'; ?>
-  <main>
-    <div
-      class="login-container"
-      style="max-width: 700px; align-items: flex-start">
+  <main class="login-page">
+    <div class="login-container" style="max-width: 700px; align-items: flex-start">
       <div class="login-title" style="margin-bottom: 1rem">
         Privacy Policy
       </div>
@@ -66,7 +64,7 @@
       </div>
     </div>
   </main>
-  <?php include 'includes/footer.php'; ?>
+  <?php include '../includes/footer.php'; ?>
   <script src="/scripts/hamburger.js"></script>
 </body>
 
