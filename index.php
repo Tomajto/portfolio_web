@@ -19,7 +19,7 @@
 
     <section class="hero" id="overview">
       <div class="hero-content">
-        <h1 class="hero-title">at <span id="dynamic-word">work</span></h1>
+        <h1 class="hero-title">at <span id="dynamic-word"></span></h1>
       </div>
     </section>
 
@@ -33,6 +33,7 @@
         <p>Accelerometer</p>
       </div>
     </section>
+    <?php include 'includes/footer.php'; ?>
     <script src="scripts/hamburger.js"></script>
     <script src="scripts/typing.js"></script>
   </body>

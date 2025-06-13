@@ -58,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sign up | Richtr</title>
     <link rel="stylesheet" href="/styles/style.css" />
-    <link rel="stylesheet" href="/styles/login.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -131,6 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </main>
+    <?php include 'includes/footer.php'; ?>
     <script src="/scripts/hamburger.js"></script>
 </body>
 
