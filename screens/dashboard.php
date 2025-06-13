@@ -121,7 +121,7 @@ $stmt->close();
         </div>
     </header>
     <main>
-        <div class="login-container" style="margin-right:auto; margin-left: auto;">
+        <div class="login-container">
             <div class="login-title">Dashboard</div>
             
             <?php if ($message): ?>
