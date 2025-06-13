@@ -1,103 +1,72 @@
 <!DOCTYPE html>
 <html lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Terms of Service | Richtr</title>
-    <link rel="stylesheet" href="/styles/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="icon" href="/assets/icon.png"/>
-  </head>
-  <body>
-    <header>
-      <div class="container navbar">
-        <a href="../index.php" class="logo">Richtr</a>
-        <nav class="nav-links">
-          <a href="../index.php#overview">Overview</a>
-          <a href="../index.php#features">Features</a>
-          <a href="../index.php#photos">Photos</a>
-          <a href="../index.php#aboutme">About me</a>
-        </nav>
-        <a href="/screens/signup.php" class="btn-order">Sign up</a>
-        <div class="hamburger" id="hamburger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terms of Service | Richtr</title>
+  <link rel="stylesheet" href="/styles/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" href="/assets/icon.png" />
+</head>
+
+<body>
+  <?php include '../includes/header.php'; ?>
+  <main>
+    <div
+      class="login-container"
+      style="max-width: 700px; align-items: flex-start">
+      <div class="login-title" style="margin-bottom: 1rem">
+        Terms of Service
       </div>
-      <div class="mobile-menu" id="mobileMenu">
-        <ul>
-          <li><a href="../index.php#overview">Overview</a></li>
-          <li><a href="../index.php#features">Features</a></li>
-          <li><a href="../index.php#photos">Photos</a></li>
-          <li><a href="../index.php#aboutme">About me</a></li>
+      <div style="color: #444; font-size: 1rem; line-height: 1.7">
+        <p>
+          Welcome to the Tomáš Richtr website. By using this service, you
+          agree to the following terms:
+        </p>
+        <ol style="margin-left: 1.2em; margin-bottom: 1.2em">
           <li>
-            <a
-              href="/screens/signup.php"
-              class="btn-order-mobile"
-              style="padding: 0.5rem 1rem; margin-top: 1rem"
-              >Sign up</a
-            >
+            <strong>Personal Data:</strong> Your personal data will be
+            processed in accordance with the
+            <a href="/screens/privacy.php">Privacy Policy</a>.
           </li>
-        </ul>
+          <li>
+            <strong>Use of Service:</strong> You may not use the service for
+            any illegal purposes or in any way that could harm other users or
+            the operator.
+          </li>
+          <li>
+            <strong>Content:</strong> All content on this website is protected
+            by copyright. Copying or distributing content without permission
+            is not allowed.
+          </li>
+          <li>
+            <strong>Changes to Terms:</strong> The operator reserves the right
+            to change these terms at any time. You will be informed of any
+            changes on this page.
+          </li>
+          <li>
+            <strong>Contact:</strong> If you have any questions, please
+            contact us via the contact form.
+          </li>
+        </ol>
+        <p>
+          By using this service, you confirm that you have read and understand
+          these terms.
+        </p>
       </div>
-    </header>
-    <main>
-      <div
-        class="login-container"
-        style="max-width: 700px; align-items: flex-start"
-      >
-        <div class="login-title" style="margin-bottom: 1rem">
-          Terms of Service
-        </div>
-        <div style="color: #444; font-size: 1rem; line-height: 1.7">
-          <p>
-            Welcome to the Tomáš Richtr website. By using this service, you
-            agree to the following terms:
-          </p>
-          <ol style="margin-left: 1.2em; margin-bottom: 1.2em">
-            <li>
-              <strong>Personal Data:</strong> Your personal data will be
-              processed in accordance with the
-              <a href="/screens/privacy.php">Privacy Policy</a>.
-            </li>
-            <li>
-              <strong>Use of Service:</strong> You may not use the service for
-              any illegal purposes or in any way that could harm other users or
-              the operator.
-            </li>
-            <li>
-              <strong>Content:</strong> All content on this website is protected
-              by copyright. Copying or distributing content without permission
-              is not allowed.
-            </li>
-            <li>
-              <strong>Changes to Terms:</strong> The operator reserves the right
-              to change these terms at any time. You will be informed of any
-              changes on this page.
-            </li>
-            <li>
-              <strong>Contact:</strong> If you have any questions, please
-              contact us via the contact form.
-            </li>
-          </ol>
-          <p>
-            By using this service, you confirm that you have read and understand
-            these terms.
-          </p>
-        </div>
-        <div class="login-links" style="margin-top: 2rem">
-          <a href="/screens/signup.php">Back to registration</a> |
-          <a href="../index.php">Home</a>
-        </div>
+      <div class="login-links" style="margin-top: 2rem">
+        <a href="/screens/signup.php">Back to registration</a> |
+        <a href="../index.php">Home</a>
       </div>
-    </main>
-    <?php include 'includes/footer.php'; ?>
-    <script src="/scripts/hamburger.js"></script>
-  </body>
+    </div>
+  </main>
+  <?php include 'includes/footer.php'; ?>
+  <script src="/scripts/hamburger.js"></script>
+</body>
+
 </html>
