@@ -36,10 +36,10 @@
         </div>
         
         <div class="footer-bottom">
-            <p>&copy; 2024 Tomáš Richtr. All rights reserved.</p>
+            <p>&copy; 2025 Tomáš Richtr. All rights reserved.</p>
             <div class="footer-social">
                 <a href="#" class="social-link">GitHub</a>
-                <a href="#" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link">Instagram</a>
                 <a href="#" class="social-link">Twitter</a>
             </div>
         </div>

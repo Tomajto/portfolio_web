@@ -415,7 +415,7 @@ header {
 /* Add this to the end of your style.css file */
 
 /* =============== FOOTER =============== */
-.footer {
+footer {
     background: #fff;
     border-top: 1px solid #e0e0e0;
     padding: 3rem 0 1.5rem 0;
