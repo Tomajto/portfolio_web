@@ -10,6 +10,7 @@ if (!isset($_SESSION['email'])) {
 
 include '../database/db_connection.php';
 $userEmail = $_SESSION['email'];
+$userCoins = (int)$user['coins'];
 
 $message = "";
 $messageType = "";
@@ -252,7 +253,7 @@ if ($user['last_coin_collection']) {
                 <h3 style="margin-bottom: 1rem; color: #6b21a8;">Your Account Info</h3>
                 <p style="margin-bottom: 0.5rem;"><strong>Username:</strong> <?php echo htmlspecialchars($user['username'] ?? 'N/A'); ?></p>
                 <p style="margin-bottom: 1rem;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email'] ?? 'N/A'); ?></p>
-                <p style="margin-bottom: 1rem;"><strong>Coins:</strong> <?php echo isset($user['coins']) ? (int)$user['coins'] : 0; ?> 🪙</p>
+                <p style="margin-bottom: 1rem;"><strong>Coins:</strong> <span id="userCoins"><?php echo $userCoins; ?></span> 🪙</p>
                 
                 <!-- Daily Coin Collection -->
                 <div class="daily-coins-section">
