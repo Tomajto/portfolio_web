@@ -118,7 +118,7 @@ $stmt->close();
         <div class="container navbar">
             <a href="../index.php" class="logo">Richtr</a>
             <nav class="nav-links">
-                <a href="../screens/leaderboard.php">Slots</a>
+                <a href="../screens/slots.php">Slots</a>
                 <a href="../screens/leaderboard.php">Ride the bus</a>
                 <a href="../screens/leaderboard.php">Roulette</a>
                 <a href="../screens/leaderboard.php">Leaderboard</a>
@@ -132,7 +132,7 @@ $stmt->close();
         </div>
         <div class="mobile-menu" id="mobileMenu">
             <ul>
-                <li><a href="../screens/leaderboard.php">Slots</a></li>
+                <li><a href="../screens/slots.php">Slots</a></li>
                 <li><a href="../screens/leaderboard.php">Ride the bus</a></li>
                 <li><a href="../screens/leaderboard.php">Roulette</a></li>
                 <li><a href="../screens/leaderboard.php">Leaderboard</a></li>
