@@ -88,7 +88,6 @@ if ($result) {
             </div>
         </div>
     </main>
-    <?php include '../includes/footer.php'; ?>
     <script src="/scripts/hamburger.js"></script>
 </body>
 

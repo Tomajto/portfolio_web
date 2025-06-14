@@ -167,7 +167,6 @@ $stmt->close();
             </div>
         </div>
     </main>
-    <?php include '../includes/footer.php'; ?>
     <script>
         function autoUpload() {
             const fileInput = document.getElementById('profileInput');
