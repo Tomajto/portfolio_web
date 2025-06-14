@@ -146,8 +146,18 @@ if ($lastBetAmount > $userCoins) {
                 </div>
             </div>
             
+            <!-- All In Button -->
+            <div class="all-in-section">
+                <button type="button" class="all-in-btn" onclick="setAllIn()" <?php echo $userCoins <= 0 ? 'disabled' : ''; ?>>
+                    💎 ALL IN (<?php echo $userCoins; ?> coins)
+                </button>
+            </div>
+            
             <!-- Betting Controls -->
             <form method="POST" class="betting-form">
+                <div class="bet-amount-label">
+                    <h4>Bet Amount:</h4>
+                </div>
                 <div class="bet-controls">
                     <button type="button" class="bet-btn" onclick="adjustBet(-10)">-10</button>
                     <button type="button" class="bet-btn" onclick="adjustBet(-1)">-1</button>
@@ -191,6 +201,23 @@ if ($lastBetAmount > $userCoins) {
             
             // Store in session via AJAX (optional for immediate persistence)
             updateBetInSession(newBet);
+        }
+        
+        function setAllIn() {
+            const betInput = document.getElementById('betAmount');
+            const userCoins = <?php echo $userCoins; ?>;
+            
+            if (userCoins > 0) {
+                betInput.value = userCoins;
+                updateBetInSession(userCoins);
+                
+                // Visual feedback
+                const allInBtn = document.querySelector('.all-in-btn');
+                allInBtn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    allInBtn.style.transform = 'scale(1)';
+                }, 150);
+            }
         }
         
         // Optional: Update bet amount in session immediately via AJAX

@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'bet' => $betAmount,
                 'stage' => 1,
                 'cards' => [],
-                'multiplier' => 2,
+                'multiplier' => 2, // Stage 1 multiplier
                 'active' => true
             ];
             
@@ -93,13 +93,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
         if ($correct) {
+            // Move to next stage AFTER checking the current one
             $game['stage']++;
+            
+            // Set multiplier for the NEW stage
             switch ($game['stage']) {
-                case 2: $game['multiplier'] = 3; break;
-                case 3: $game['multiplier'] = 4; break;
-                case 4: $game['multiplier'] = 20; break;
-                case 5: // Game won!
-                    $winAmount = $game['bet'] * 20;
+                case 2: $game['multiplier'] = 3; break; // Stage 2 multiplier
+                case 3: $game['multiplier'] = 4; break; // Stage 3 multiplier
+                case 4: $game['multiplier'] = 20; break; // Stage 4 multiplier
+                case 5: // Game won all 4 stages!
+                    $winAmount = $game['bet'] * 20; // Final stage was 20x
                     $newCoins = $userCoins + $winAmount;
                     $stmt = $conn->prepare("UPDATE users SET coins = ? WHERE email = ?");
                     $stmt->bind_param("is", $newCoins, $userEmail);
@@ -119,9 +122,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         $_SESSION['card_game'] = $game;
     } elseif (isset($_POST['collect_winnings'])) {
-        // Collect current winnings
+        // Collect current winnings - use PREVIOUS stage multiplier
         $game = $_SESSION['card_game'];
-        $winAmount = $game['bet'] * $game['multiplier'];
+        
+        // Get the correct multiplier for the stage they just completed
+        $stageMultipliers = [1 => 2, 2 => 3, 3 => 4, 4 => 20];
+        $completedStage = $game['stage'] - 1; // They completed the previous stage
+        $currentMultiplier = $stageMultipliers[$completedStage];
+        
+        $winAmount = $game['bet'] * $currentMultiplier;
         $newCoins = $userCoins + $winAmount;
         
         $stmt = $conn->prepare("UPDATE users SET coins = ? WHERE email = ?");
@@ -143,6 +152,12 @@ function getCardName($card) {
     $value = $names[$card['value']] ?? $card['value'];
     $suitSymbols = ['hearts' => '♥️', 'diamonds' => '♦️', 'clubs' => '♣️', 'spades' => '♠️'];
     return $value . $suitSymbols[$card['suit']];
+}
+
+// Get display multiplier (what they'll win if they complete current stage)
+function getDisplayMultiplier($stage) {
+    $multipliers = [1 => 2, 2 => 3, 3 => 4, 4 => 20];
+    return $multipliers[$stage] ?? 1;
 }
 ?>
 
@@ -209,8 +224,8 @@ function getCardName($card) {
                     <div class="game-info">
                         <p><strong>Stage:</strong> <?php echo $game['stage']; ?>/4</p>
                         <p><strong>Current Bet:</strong> <?php echo $game['bet']; ?> coins</p>
-                        <p><strong>Current Multiplier:</strong> <?php echo $game['multiplier']; ?>x</p>
-                        <p><strong>Potential Win:</strong> <?php echo $game['bet'] * $game['multiplier']; ?> coins</p>
+                        <p><strong>Current Multiplier:</strong> <?php echo getDisplayMultiplier($game['stage']); ?>x</p>
+                        <p><strong>Potential Win:</strong> <?php echo $game['bet'] * getDisplayMultiplier($game['stage']); ?> coins</p>
                     </div>
                     
                     <!-- Display Previous Cards -->
@@ -261,10 +276,15 @@ function getCardName($card) {
                     </form>
                     
                     <?php if ($game['stage'] > 1): ?>
-                        <!-- Collect Winnings Option -->
+                        <!-- Collect Winnings Option - show what they earned from previous stage -->
                         <form method="POST" class="collect-form">
+                            <?php 
+                            $completedStage = $game['stage'] - 1;
+                            $stageMultipliers = [1 => 2, 2 => 3, 3 => 4, 4 => 20];
+                            $earnedMultiplier = $stageMultipliers[$completedStage];
+                            ?>
                             <button type="submit" name="collect_winnings" class="collect-btn">
-                                💰 Collect <?php echo $game['bet'] * $game['multiplier']; ?> coins
+                                💰 Collect <?php echo $game['bet'] * $earnedMultiplier; ?> coins
                             </button>
                         </form>
                     <?php endif; ?>

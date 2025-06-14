@@ -8,8 +8,8 @@
             <div class="footer-section">
                 <h4>Games</h4>
                 <ul class="footer-links">
-                    <li><a href="/screens/leaderboard.php">Slots</a></li>
-                    <li><a href="/screens/leaderboard.php">Ride the bus</a></li>
+                    <li><a href="/screens/slots.php">Slots</a></li>
+                    <li><a href="/screens/ride_the_bus.php">Ride the bus</a></li>
                     <li><a href="/screens/leaderboard.php">Roulette</a></li>
                     <li><a href="/screens/leaderboard.php">Leaderboard</a></li>
                 </ul>
