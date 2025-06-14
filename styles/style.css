@@ -165,6 +165,7 @@ header {
   text-transform: lowercase;
   background: linear-gradient(90deg, #ec008c 0%, #7700e6 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 /* Obrázek sluchátek */

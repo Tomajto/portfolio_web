@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Redirect to login if not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
@@ -35,19 +34,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
     if ($fileError === 0) {
         if (in_array($fileExt, $allowedExt)) {
             if ($fileSize < 5000000) { // 5MB limit
+                
+                // Get current profile picture before updating
+                $stmt = $conn->prepare("SELECT profile_pic FROM users WHERE email = ?");
+                $stmt->bind_param("s", $userEmail);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $currentUser = $result->fetch_assoc();
+                $oldProfilePic = $currentUser['profile_pic'];
+                $stmt->close();
+                
                 // Generate unique filename
                 $newFileName = uniqid('profile_', true) . '.' . $fileExt;
                 $fileDestination = $uploadDir . $newFileName;
 
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
-                    // Update database
+                    // Update database with new profile picture
                     $stmt = $conn->prepare("UPDATE users SET profile_pic = ? WHERE email = ?");
                     $stmt->bind_param("ss", $newFileName, $userEmail);
 
                     if ($stmt->execute()) {
+                        // Delete old profile picture if it exists and it's not the default
+                        if ($oldProfilePic && $oldProfilePic !== 'default-avatar.png') {
+                            $oldFilePath = $uploadDir . $oldProfilePic;
+                            if (file_exists($oldFilePath)) {
+                                unlink($oldFilePath); // Delete the old file
+                            }
+                        }
+                        
                         $message = "Profile picture updated successfully!";
                         $messageType = "success";
                     } else {
+                        // If database update fails, remove the newly uploaded file
+                        if (file_exists($fileDestination)) {
+                            unlink($fileDestination);
+                        }
                         $message = "Database error occurred.";
                         $messageType = "error";
                     }
@@ -92,8 +113,7 @@ $stmt->close();
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
     <link rel="icon" href="/assets/icon.png" />
 </head>
-
-<body>
+<body class="login-page">
     <header>
         <div class="container navbar">
             <a href="../index.php" class="logo">Richtr</a>
@@ -147,7 +167,7 @@ $stmt->close();
                             class="file-input"
                             id="profileInput"
                             onchange="autoUpload()">
-                        <div class="login-btn">Choose Profile Picture</div>
+                        <div class="file-input-button">Choose Profile Picture</div>
                     </div>
                     <div id="uploadStatus" style="margin-top: 1rem; display: none;">
                         <span style="color: #6b21a8; font-weight: 500;">Uploading...</span>
