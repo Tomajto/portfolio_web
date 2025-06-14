@@ -162,8 +162,7 @@ $stmt = $conn->prepare("SELECT username, email, profile_pic, coins, last_coin_co
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();
 $result = $stmt->get_result();
-$user = $result->fetch_assoc();
-if ($result->num_rows > 0) {
+if ($result && $result->num_rows > 0) {
     $user = $result->fetch_assoc();
     // Debug: Check what data we actually got
     error_log("User data fetched: " . print_r($user, true));
