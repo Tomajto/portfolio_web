@@ -650,6 +650,53 @@ header {
     border-bottom: none;
 }
 
+.daily-coins-section {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.collect-coins-btn {
+    background: linear-gradient(135deg, #ec008c, #6b21a8);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(107, 33, 168, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.collect-coins-btn:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(107, 33, 168, 0.4);
+}
+
+.collect-coins-btn.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+.collect-coins-btn:active:not(.disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(107, 33, 168, 0.3);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .collect-coins-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
     .slot-reels {
