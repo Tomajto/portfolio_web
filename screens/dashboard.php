@@ -167,9 +167,15 @@ if ($result && $result->num_rows > 0) {
     $user = $result->fetch_assoc();
     // Debug: Check what data we actually got
     error_log("User data fetched: " . print_r($user, true));
+    
+    // Ensure coins is set to 0 if null
+    if (!isset($user['coins']) || $user['coins'] === null) {
+        $user['coins'] = 0;
+    }
 } else {
     // If user not found, redirect to login
     error_log("No user found for email: " . $userEmail);
+    error_log("Session email: " . $userEmail);
     header("Location: login.php");
     exit();
 }
