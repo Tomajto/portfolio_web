@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bet_amount'])) {
         $messageType = "error";
     } else {
         // Generate random slot results
-        $fruits = ['🍎', '🍊', '🍋', '🍌', '🍇', '🍓', '🥝'];
+        $fruits = ['🍎', '🍊', '🍋', '🍌', '🍇'];
         $slot1 = $fruits[array_rand($fruits)];
         $slot2 = $fruits[array_rand($fruits)];
         $slot3 = $fruits[array_rand($fruits)];
