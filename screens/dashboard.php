@@ -254,7 +254,7 @@ if ($user['last_coin_collection']) {
 
             <!-- Account Info Section -->
             <?php
-            $stmt = $conn->prepare("SELECT username, email, profile_pic FROM users WHERE email = ?");
+            $stmt = $conn->prepare("SELECT username, email, coins FROM users WHERE email = ?");
             $stmt->bind_param("s", $userEmail);
             $stmt->execute();
             $result = $stmt->get_result();
