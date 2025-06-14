@@ -24,15 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
     $userData = $result->fetch_assoc();
     $lastCollection = $userData['last_coin_collection'];
     $stmt->close();
-    
+
     $now = new DateTime();
     $canCollect = true;
-    
+
     if ($lastCollection) {
         $lastCollectionTime = new DateTime($lastCollection);
         $timeDiff = $now->diff($lastCollectionTime);
         $hoursSinceLastCollection = $timeDiff->days * 24 + $timeDiff->h;
-        
+
         if ($hoursSinceLastCollection < 20) {
             $hoursLeft = 20 - $hoursSinceLastCollection;
             $minutesLeft = 60 - $timeDiff->i;
@@ -40,18 +40,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
                 $minutesLeft = 0;
                 $hoursLeft--;
             }
-            
+
             $message = "You can collect coins again in {$hoursLeft}h {$minutesLeft}m";
             $messageType = "error";
             $canCollect = false;
         }
     }
-    
+
     if ($canCollect) {
         // Add 50 coins and update last collection time
         $stmt = $conn->prepare("UPDATE users SET coins = coins + 50, last_coin_collection = NOW() WHERE email = ?");
         $stmt->bind_param("s", $userEmail);
-        
+
         if ($stmt->execute()) {
             $message = "🎉 You collected 50 coins! Come back in 20 hours for more.";
             $messageType = "success";
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
             $messageType = "error";
         }
         $stmt->close();
-        
+
         // Redirect to prevent form resubmission
         header("Location: dashboard.php?collected=1");
         exit();
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
     if ($fileError === 0) {
         if (in_array($fileExt, $allowedExt)) {
             if ($fileSize < 5000000) { // 5MB limit
-                
+
                 // Get current profile picture before updating
                 $stmt = $conn->prepare("SELECT profile_pic FROM users WHERE email = ?");
                 $stmt->bind_param("s", $userEmail);
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
                 $currentUser = $result->fetch_assoc();
                 $oldProfilePic = $currentUser['profile_pic'];
                 $stmt->close();
-                
+
                 // Generate unique filename
                 $newFileName = uniqid('profile_', true) . '.' . $fileExt;
                 $fileDestination = "{$uploadDir}{$newFileName}";
@@ -116,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
                                 unlink($oldFilePath);
                             }
                         }
-                        
+
                         // Redirect to prevent form resubmission
                         header("Location: dashboard.php?uploaded=1");
                         exit();
@@ -166,7 +166,7 @@ if ($result && $result->num_rows > 0) {
     $user = $result->fetch_assoc();
     // Debug: Check what data we actually got
     error_log("User data fetched: " . print_r($user, true));
-    
+
     // Ensure coins is set to 0 if null
     if (!isset($user['coins']) || $user['coins'] === null) {
         $user['coins'] = 0;
@@ -189,7 +189,7 @@ if ($user['last_coin_collection']) {
     $lastCollection = new DateTime($user['last_coin_collection']);
     $timeDiff = $now->diff($lastCollection);
     $hoursSinceLastCollection = ($timeDiff->days * 24) + $timeDiff->h;
-    
+
     if ($hoursSinceLastCollection < 20) {
         $canCollectCoins = false;
         $hoursLeft = 20 - $hoursSinceLastCollection;
@@ -253,12 +253,20 @@ if ($user['last_coin_collection']) {
             </div>
 
             <!-- Account Info Section -->
+            <?php
+            $stmt = $conn->prepare("SELECT username, email, profile_pic FROM users WHERE email = ?");
+            $stmt->bind_param("s", $userEmail);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
+            $stmt->close();
+            ?>
             <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
                 <h3 style="margin-bottom: 1rem; color: #6b21a8;">Your Account Info</h3>
                 <p style="margin-bottom: 0.5rem;"><strong>Username:</strong> <?php echo htmlspecialchars($user['username'] ?? 'N/A'); ?></p>
                 <p style="margin-bottom: 1rem;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email'] ?? 'N/A'); ?></p>
                 <p style="margin-bottom: 1rem;"><strong>Coins:</strong> <span id="userCoins"><?php echo htmlspecialchars((int)($user['coins'] ?? 0)); ?></span> 🪙</p>
-                
+
                 <!-- Daily Coin Collection -->
                 <div class="daily-coins-section">
                     <?php if ($canCollectCoins): ?>
