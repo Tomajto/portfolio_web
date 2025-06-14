@@ -1,6 +1,6 @@
 <?php
-// filepath: c:\PROJEKTY\portfolio_web\includes\header.php
 session_start();
+require_once __DIR__ . '/../database/db_connection.php';
 $isLoggedIn = isset($_SESSION['email']);
 $userProfilePic = null;
 
