@@ -707,6 +707,182 @@ header {
   box-shadow: 0 2px 10px rgba(107, 33, 168, 0.3);
 }
 
+.cards-container {
+  max-width: 600px;
+  text-align: center;
+}
+
+.betting-section {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 1.5rem 0;
+}
+
+.slider-container {
+  margin: 1.5rem 0;
+}
+
+.bet-slider {
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  margin-bottom: 1rem;
+}
+
+.bet-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #6b21a8;
+  cursor: pointer;
+}
+
+.bet-display {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #6b21a8;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #ec008c, #6b21a8);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 100%;
+  max-width: 200px;
+}
+
+.start-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.game-section {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  margin: 1.5rem 0;
+}
+
+.game-info {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.game-info p {
+  margin: 0.5rem 0;
+}
+
+.cards-display {
+  margin: 1.5rem 0;
+}
+
+.card {
+  display: inline-block;
+  background: white;
+  border: 2px solid #333;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  min-width: 60px;
+}
+
+.card.red {
+  color: #dc2626;
+}
+
+.card.black {
+  color: #333;
+}
+
+.guess-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.guess-btn {
+  background: #6b21a8;
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 120px;
+}
+
+.guess-btn:hover {
+  background: #4c1d95;
+  transform: translateY(-2px);
+}
+
+.guess-btn.red {
+  background: #dc2626;
+}
+
+.guess-btn.red:hover {
+  background: #b91c1c;
+}
+
+.guess-btn.black {
+  background: #333;
+}
+
+.guess-btn.black:hover {
+  background: #111;
+}
+
+.collect-btn {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin-top: 1rem;
+}
+
+.collect-btn:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .guess-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .guess-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .game-info {
+    text-align: center;
+  }
+}
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .collect-coins-btn {
