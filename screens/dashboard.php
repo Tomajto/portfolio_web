@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
     if ($lastCollection) {
         $lastCollectionTime = new DateTime($lastCollection);
         $timeDiff = $now->diff($lastCollectionTime);
-        $hoursSinceLastCollection = ($timeDiff->days * 24) + $timeDiff->h;
+        $hoursSinceLastCollection = $timeDiff->days * 24 + $timeDiff->h;
         
         if ($hoursSinceLastCollection < 20) {
             $hoursLeft = 20 - $hoursSinceLastCollection;
@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
                 
                 // Generate unique filename
                 $newFileName = uniqid('profile_', true) . '.' . $fileExt;
-                $fileDestination = $uploadDir . $newFileName;
+                $fileDestination = "{$uploadDir}{$newFileName}";
 
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
                     // Update database with new profile picture
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
                     if ($stmt->execute()) {
                         // Delete old profile picture if it exists and it's not the default
                         if ($oldProfilePic && $oldProfilePic !== 'default-avatar.png') {
-                            $oldFilePath = $uploadDir . $oldProfilePic;
+                            $oldFilePath = "{$uploadDir}{$oldProfilePic}";
                             if (file_exists($oldFilePath)) {
                                 unlink($oldFilePath);
                             }
@@ -165,8 +165,11 @@ $result = $stmt->get_result();
 
 if ($result && $result->num_rows > 0) {
     $user = $result->fetch_assoc();
+    // Debug: Check what data we actually got
+    error_log("User data fetched: " . print_r($user, true));
 } else {
     // If user not found, redirect to login
+    error_log("No user found for email: " . $userEmail);
     header("Location: login.php");
     exit();
 }
@@ -273,7 +276,6 @@ if ($user['last_coin_collection']) {
             </div>
         </div>
     </main>
-    <?php include '../includes/footer.php'; ?>
     <script>
         function autoUpload() {
             const fileInput = document.getElementById('profileInput');
