@@ -1,5 +1,7 @@
 <?php
+// filepath: c:\PROJEKTY\portfolio_web\screens\dashboard.php
 session_start();
+
 // Redirect to login if not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
@@ -11,6 +13,55 @@ $userEmail = $_SESSION['email'];
 
 $message = "";
 $messageType = "";
+
+// Handle daily coin collection
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
+    // Get user's last collection time
+    $stmt = $conn->prepare("SELECT last_coin_collection FROM users WHERE email = ?");
+    $stmt->bind_param("s", $userEmail);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    $lastCollection = $user['last_coin_collection'];
+    $stmt->close();
+    
+    $now = new DateTime();
+    $canCollect = true;
+    
+    if ($lastCollection) {
+        $lastCollectionTime = new DateTime($lastCollection);
+        $timeDiff = $now->diff($lastCollectionTime);
+        $hoursSinceLastCollection = ($timeDiff->days * 24) + $timeDiff->h;
+        
+        if ($hoursSinceLastCollection < 20) {
+            $hoursLeft = 20 - $hoursSinceLastCollection;
+            $minutesLeft = 60 - $timeDiff->i;
+            if ($minutesLeft == 60) {
+                $minutesLeft = 0;
+                $hoursLeft--;
+            }
+            
+            $message = "You can collect coins again in {$hoursLeft}h {$minutesLeft}m";
+            $messageType = "error";
+            $canCollect = false;
+        }
+    }
+    
+    if ($canCollect) {
+        // Add 50 coins and update last collection time
+        $stmt = $conn->prepare("UPDATE users SET coins = coins + 50, last_coin_collection = NOW() WHERE email = ?");
+        $stmt->bind_param("s", $userEmail);
+        
+        if ($stmt->execute()) {
+            $message = "🎉 You collected 50 coins! Come back in 20 hours for more.";
+            $messageType = "success";
+        } else {
+            $message = "Error collecting coins. Please try again.";
+            $messageType = "error";
+        }
+        $stmt->close();
+    }
+}
 
 // Handle profile picture upload
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
@@ -92,12 +143,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
 }
 
 // Get user info from database
-$stmt = $conn->prepare("SELECT username, email, profile_pic FROM users WHERE email = ?");
+$stmt = $conn->prepare("SELECT username, email, profile_pic, coins, last_coin_collection FROM users WHERE email = ?");
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
+
+// Check if user can collect coins
+$canCollectCoins = true;
+$timeUntilNextCollection = "";
+
+if ($user['last_coin_collection']) {
+    $now = new DateTime();
+    $lastCollection = new DateTime($user['last_coin_collection']);
+    $timeDiff = $now->diff($lastCollection);
+    $hoursSinceLastCollection = ($timeDiff->days * 24) + $timeDiff->h;
+    
+    if ($hoursSinceLastCollection < 20) {
+        $canCollectCoins = false;
+        $hoursLeft = 20 - $hoursSinceLastCollection;
+        $minutesLeft = 60 - $timeDiff->i;
+        if ($minutesLeft == 60) {
+            $minutesLeft = 0;
+            $hoursLeft--;
+        }
+        $timeUntilNextCollection = "{$hoursLeft}h {$minutesLeft}m";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -113,35 +186,9 @@ $stmt->close();
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
     <link rel="icon" href="/assets/icon.png" />
 </head>
+
 <body class="login-page">
-    <header>
-        <div class="container navbar">
-            <a href="../index.php" class="logo">Richtr</a>
-            <nav class="nav-links">
-                <a href="../screens/slots.php">Slots</a>
-                <a href="../screens/leaderboard.php">Ride the bus</a>
-                <a href="../screens/leaderboard.php">Roulette</a>
-                <a href="../screens/leaderboard.php">Leaderboard</a>
-            </nav>
-            <a href="logout.php" class="btn-order">Log out</a>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        <div class="mobile-menu" id="mobileMenu">
-            <ul>
-                <li><a href="../screens/slots.php">Slots</a></li>
-                <li><a href="../screens/leaderboard.php">Ride the bus</a></li>
-                <li><a href="../screens/leaderboard.php">Roulette</a></li>
-                <li><a href="../screens/leaderboard.php">Leaderboard</a></li>
-                <li>
-                    <a href="logout.php" class="btn-order-mobile" style="padding: 0.5rem 1rem; margin-top: 1rem">Log out</a>
-                </li>
-            </ul>
-        </div>
-    </header>
+    <?php include '../includes/header.php'; ?>
     <main>
         <div class="login-container">
             <div class="login-title">Dashboard</div>
@@ -179,11 +226,28 @@ $stmt->close();
             <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
                 <h3 style="margin-bottom: 1rem; color: #6b21a8;">Your Account Info</h3>
                 <p style="margin-bottom: 0.5rem;"><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
-                <p style="margin-bottom: 0;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+                <p style="margin-bottom: 1rem;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+                <p style="margin-bottom: 1rem;"><strong>Coins:</strong> <?php echo (int)$user['coins']; ?> 🪙</p>
+                
+                <!-- Daily Coin Collection -->
+                <div class="daily-coins-section">
+                    <?php if ($canCollectCoins): ?>
+                        <form method="POST" style="display: inline;">
+                            <input type="hidden" name="collect_coins" value="1">
+                            <button type="submit" class="collect-coins-btn">
+                                🎁 Collect 50 Coins
+                            </button>
+                        </form>
+                    <?php else: ?>
+                        <button class="collect-coins-btn disabled" disabled>
+                            ⏰ Next collection in <?php echo $timeUntilNextCollection; ?>
+                        </button>
+                    <?php endif; ?>
+                </div>
             </div>
 
             <div class="login-links">
-                <a href="logout.php">Log out</a> | <a href="../index.php">Go to Home</a>
+                <a href="logout.php">Log out</a> | <a href="../index.php">Go to Home</a> | <a href="slots.php">Play Slots</a>
             </div>
         </div>
     </main>
