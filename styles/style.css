@@ -655,6 +655,14 @@ header {
     text-align: center;
 }
 
+.green {
+    color: #16a34a;
+}
+
+.red {
+    color: #dc2626;
+}
+
 .collect-coins-btn {
     background: linear-gradient(135deg, #ec008c, #6b21a8);
     color: white;
