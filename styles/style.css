@@ -656,11 +656,11 @@ header {
 }
 
 .green {
-    color: #16a34a;
+    background-color: #16a34a;
 }
 
 .red {
-    color: #dc2626;
+    background-color: #dc2626;
 }
 
 .collect-coins-btn {
