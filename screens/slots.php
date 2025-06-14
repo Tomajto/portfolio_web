@@ -1,4 +1,5 @@
 <?php
+// filepath: c:\PROJEKTY\portfolio_web\screens\slots.php
 session_start();
 
 // Redirect to login if not logged in
@@ -26,6 +27,9 @@ $stmt->close();
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bet_amount'])) {
     $betAmount = (int)$_POST['bet_amount'];
     
+    // Store bet amount in session
+    $_SESSION['last_bet_amount'] = $betAmount;
+    
     if ($betAmount <= 0) {
         $message = "Bet amount must be greater than 0!";
         $messageType = "error";
@@ -34,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bet_amount'])) {
         $messageType = "error";
     } else {
         // Generate random slot results
-        $fruits = ['🍎', '🍊', '🍋', '🍌', '🍇'];
+        $fruits = ['🍎', '🍊', '🍋', '🍌', '🍇', '🍓', '🥝'];
         $slot1 = $fruits[array_rand($fruits)];
         $slot2 = $fruits[array_rand($fruits)];
         $slot3 = $fruits[array_rand($fruits)];
@@ -88,6 +92,14 @@ if (isset($_SESSION['game_message'])) {
     unset($_SESSION['game_message']);
     unset($_SESSION['game_message_type']);
 }
+
+// Get last bet amount from session, default to 1
+$lastBetAmount = $_SESSION['last_bet_amount'] ?? 1;
+
+// Ensure bet amount doesn't exceed current coins
+if ($lastBetAmount > $userCoins) {
+    $lastBetAmount = min($userCoins, 1);
+}
 ?>
 
 <!DOCTYPE html>
@@ -137,11 +149,11 @@ if (isset($_SESSION['game_message'])) {
             <!-- Betting Controls -->
             <form method="POST" class="betting-form">
                 <div class="bet-controls">
-                    <button type="button" class="bet-btn red" onclick="adjustBet(-10)">-10</button>
-                    <button type="button" class="bet-btn red" onclick="adjustBet(-1)">-1</button>
-                    <input type="number" name="bet_amount" id="betAmount" value="1" min="1" max="<?php echo $userCoins; ?>" class="bet-input">
-                    <button type="button" class="bet-btn green" onclick="adjustBet(1)">+1</button>
-                    <button type="button" class="bet-btn green" onclick="adjustBet(10)">+10</button>
+                    <button type="button" class="bet-btn" onclick="adjustBet(-10)">-10</button>
+                    <button type="button" class="bet-btn" onclick="adjustBet(-1)">-1</button>
+                    <input type="number" name="bet_amount" id="betAmount" value="<?php echo $lastBetAmount; ?>" min="1" max="<?php echo $userCoins; ?>" class="bet-input">
+                    <button type="button" class="bet-btn" onclick="adjustBet(1)">+1</button>
+                    <button type="button" class="bet-btn" onclick="adjustBet(10)">+10</button>
                 </div>
                 <button type="submit" class="spin-btn" <?php echo $userCoins <= 0 ? 'disabled' : ''; ?>>
                     🎰 SPIN 🎰
@@ -168,7 +180,7 @@ if (isset($_SESSION['game_message'])) {
         function adjustBet(amount) {
             const betInput = document.getElementById('betAmount');
             const userCoins = <?php echo $userCoins; ?>;
-            let currentBet = parseInt(betInput.value) || 1;
+            let currentBet = parseInt(betInput.value) || <?php echo $lastBetAmount; ?>;
             let newBet = currentBet + amount;
             
             // Ensure bet is within valid range
@@ -176,7 +188,27 @@ if (isset($_SESSION['game_message'])) {
             if (newBet > userCoins) newBet = userCoins;
             
             betInput.value = newBet;
+            
+            // Store in session via AJAX (optional for immediate persistence)
+            updateBetInSession(newBet);
         }
+        
+        // Optional: Update bet amount in session immediately via AJAX
+        function updateBetInSession(betAmount) {
+            fetch('update_bet.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'bet_amount=' + betAmount
+            });
+        }
+        
+        // Update session when user manually changes input
+        document.getElementById('betAmount').addEventListener('input', function() {
+            const betAmount = parseInt(this.value) || 1;
+            updateBetInSession(betAmount);
+        });
         
         // Prevent form submission if user has no coins
         document.querySelector('.betting-form').addEventListener('submit', function(e) {
@@ -185,7 +217,7 @@ if (isset($_SESSION['game_message'])) {
             
             if (userCoins <= 0) {
                 e.preventDefault();
-                alert('You need coins to play! Visit the leaderboard or get more coins.');
+                alert('You need coins to play! Visit the dashboard to collect coins.');
             } else if (betAmount > userCoins) {
                 e.preventDefault();
                 alert('You cannot bet more coins than you have!');
