@@ -159,11 +159,11 @@ if ($lastBetAmount > $userCoins) {
                     </button>
                 </div>
                 <div class="bet-controls">
-                    <button type="button" class="bet-btn" onclick="adjustBet(-10)">-10</button>
-                    <button type="button" class="bet-btn" onclick="adjustBet(-1)">-1</button>
+                    <button type="button" class="bet-btn red" onclick="adjustBet(-10)">-10</button>
+                    <button type="button" class="bet-btn red" onclick="adjustBet(-1)">-1</button>
                     <input type="number" name="bet_amount" id="betAmount" value="<?php echo $lastBetAmount; ?>" min="1" max="<?php echo $userCoins; ?>" class="bet-input">
-                    <button type="button" class="bet-btn" onclick="adjustBet(1)">+1</button>
-                    <button type="button" class="bet-btn" onclick="adjustBet(10)">+10</button>
+                    <button type="button" class="bet-btn green" onclick="adjustBet(1)">+1</button>
+                    <button type="button" class="bet-btn green" onclick="adjustBet(10)">+10</button>
                 </div>
                 <button type="submit" class="spin-btn" <?php echo $userCoins <= 0 ? 'disabled' : ''; ?>>
                     🎰 SPIN 🎰
