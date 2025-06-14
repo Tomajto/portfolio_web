@@ -616,7 +616,7 @@ header {
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 15px rgba(107, 33, 168, 0.3);
   width: 100%;
-  max-width: 200px;
+  max-width: 300px;
 }
 
 .spin-btn:hover:not(:disabled) {
@@ -876,19 +876,19 @@ header {
   background: linear-gradient(135deg, #dc2626, #991b1b);
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(107, 33, 168, 0.3);
+  width: 100%;
+  max-width: 300px;
 }
 
 .all-in-btn:hover:not(:disabled) {
-  transition: all 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
   background: linear-gradient(
     45deg,
     red,
