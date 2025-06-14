@@ -26,10 +26,10 @@ $stmt->close();
 // Handle slot game spin
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bet_amount'])) {
     $betAmount = (int)$_POST['bet_amount'];
-    
+
     // Store bet amount in session
     $_SESSION['last_bet_amount'] = $betAmount;
-    
+
     if ($betAmount <= 0) {
         $message = "Bet amount must be greater than 0!";
         $messageType = "error";
@@ -42,9 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bet_amount'])) {
         $slot1 = $fruits[array_rand($fruits)];
         $slot2 = $fruits[array_rand($fruits)];
         $slot3 = $fruits[array_rand($fruits)];
-        
+
         $winAmount = 0;
-        
+
         // Check for wins
         if ($slot1 === $slot2 && $slot2 === $slot3) {
             // Three of a kind - 10x bet
@@ -62,22 +62,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['bet_amount'])) {
             $message = "😔 No match. You lost {$betAmount} coins. Try again!";
             $messageType = "error";
         }
-        
+
         // Update user coins
         $newCoins = $userCoins - $betAmount + $winAmount;
         $stmt = $conn->prepare("UPDATE users SET coins = ? WHERE email = ?");
         $stmt->bind_param("is", $newCoins, $userEmail);
         $stmt->execute();
         $stmt->close();
-        
+
         // Update userCoins for display
         $userCoins = $newCoins;
-        
+
         // Store results for display
         $_SESSION['slot_results'] = [$slot1, $slot2, $slot3];
         $_SESSION['game_message'] = $message;
         $_SESSION['game_message_type'] = $messageType;
-        
+
         // Redirect to prevent form resubmission
         header("Location: slots.php");
         exit();
@@ -104,6 +104,7 @@ if ($lastBetAmount > $userCoins) {
 
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -112,25 +113,26 @@ if ($lastBetAmount > $userCoins) {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet" />
-    <link rel="icon" href="/assets/icon.png"/>
+    <link rel="icon" href="/assets/icon.png" />
 </head>
+
 <body class="login-page">
     <?php include '../includes/header.php'; ?>
     <main>
         <div class="login-container slots-container">
             <div class="login-title">🎰 Slots Game</div>
-            
+
             <!-- User Coins Display -->
             <div class="coins-display">
                 <h2>Your Coins: <span id="userCoins"><?php echo $userCoins; ?></span> 🪙</h2>
             </div>
-            
+
             <?php if ($message): ?>
                 <div class="message <?php echo $messageType; ?>" style="margin-bottom: 1rem; padding: 0.8rem; border-radius: 10px; text-align: center; font-weight: 600; <?php echo $messageType === 'error' ? 'background-color: #fee; color: #c33;' : 'background-color: #efe; color: #3c3;'; ?>">
                     <?php echo $message; ?>
                 </div>
             <?php endif; ?>
-            
+
             <!-- Slot Machine -->
             <div class="slot-machine">
                 <div class="slot-reels">
@@ -145,18 +147,16 @@ if ($lastBetAmount > $userCoins) {
                     </div>
                 </div>
             </div>
-            
-            <!-- All In Button -->
-            <div class="all-in-section">
-                <button type="button" class="all-in-btn" onclick="setAllIn()" <?php echo $userCoins <= 0 ? 'disabled' : ''; ?>>
-                    💎 ALL IN (<?php echo $userCoins; ?> coins)
-                </button>
-            </div>
-            
+
             <!-- Betting Controls -->
             <form method="POST" class="betting-form">
                 <div class="bet-amount-label">
                     <h4>Bet Amount:</h4>
+                </div>
+                <div class="all-in-section">
+                    <button type="button" class="all-in-btn" onclick="setAllIn()" <?php echo $userCoins <= 0 ? 'disabled' : ''; ?>>
+                        💎 ALL IN (<?php echo $userCoins; ?> coins)
+                    </button>
                 </div>
                 <div class="bet-controls">
                     <button type="button" class="bet-btn" onclick="adjustBet(-10)">-10</button>
@@ -169,7 +169,7 @@ if ($lastBetAmount > $userCoins) {
                     🎰 SPIN 🎰
                 </button>
             </form>
-            
+
             <!-- Game Rules -->
             <div class="game-rules">
                 <h3>Game Rules:</h3>
@@ -179,38 +179,38 @@ if ($lastBetAmount > $userCoins) {
                     <li>💔 No match = Lose your bet</li>
                 </ul>
             </div>
-            
+
             <div class="login-links">
                 <a href="../index.php">Home</a> | <a href="leaderboard.php">Leaderboard</a>
             </div>
         </div>
     </main>
-    
+
     <script>
         function adjustBet(amount) {
             const betInput = document.getElementById('betAmount');
             const userCoins = <?php echo $userCoins; ?>;
             let currentBet = parseInt(betInput.value) || <?php echo $lastBetAmount; ?>;
             let newBet = currentBet + amount;
-            
+
             // Ensure bet is within valid range
             if (newBet < 1) newBet = 1;
             if (newBet > userCoins) newBet = userCoins;
-            
+
             betInput.value = newBet;
-            
+
             // Store in session via AJAX (optional for immediate persistence)
             updateBetInSession(newBet);
         }
-        
+
         function setAllIn() {
             const betInput = document.getElementById('betAmount');
             const userCoins = <?php echo $userCoins; ?>;
-            
+
             if (userCoins > 0) {
                 betInput.value = userCoins;
                 updateBetInSession(userCoins);
-                
+
                 // Visual feedback
                 const allInBtn = document.querySelector('.all-in-btn');
                 allInBtn.style.transform = 'scale(0.95)';
@@ -219,7 +219,7 @@ if ($lastBetAmount > $userCoins) {
                 }, 150);
             }
         }
-        
+
         // Optional: Update bet amount in session immediately via AJAX
         function updateBetInSession(betAmount) {
             fetch('update_bet.php', {
@@ -230,18 +230,18 @@ if ($lastBetAmount > $userCoins) {
                 body: 'bet_amount=' + betAmount
             });
         }
-        
+
         // Update session when user manually changes input
         document.getElementById('betAmount').addEventListener('input', function() {
             const betAmount = parseInt(this.value) || 1;
             updateBetInSession(betAmount);
         });
-        
+
         // Prevent form submission if user has no coins
         document.querySelector('.betting-form').addEventListener('submit', function(e) {
             const userCoins = <?php echo $userCoins; ?>;
             const betAmount = parseInt(document.getElementById('betAmount').value);
-            
+
             if (userCoins <= 0) {
                 e.preventDefault();
                 alert('You need coins to play! Visit the dashboard to collect coins.');
@@ -253,4 +253,5 @@ if ($lastBetAmount > $userCoins) {
     </script>
     <script src="/scripts/hamburger.js"></script>
 </body>
+
 </html>
