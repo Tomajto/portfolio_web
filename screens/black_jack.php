@@ -87,6 +87,46 @@ function displayCard($card, $hidden = false)
     return '<div class="card ' . $color . '">' . $card['value'] . $card['suit'] . '</div>';
 }
 
+function processDealerTurn($game) {
+    // Dealer hits until 17 or higher
+    while (calculateHandValue($game['dealer_hand']) < 17) {
+        $card = array_shift($game['deck']);
+        $game['dealer_hand'][] = $card;
+    }
+
+    $playerValue = calculateHandValue($game['player_hand']);
+    $dealerValue = calculateHandValue($game['dealer_hand']);
+
+    $winAmount = 0;
+    $message = "";
+    $messageType = "";
+
+    if ($dealerValue > 21) {
+        // Dealer bust
+        $winAmount = $game['bet'] * 2;
+        $message = "🎉 Dealer bust! You won " . $game['bet'] . " coins!";
+        $messageType = "success";
+    } elseif ($playerValue > $dealerValue) {
+        // Player wins
+        $winAmount = $game['bet'] * 2;
+        $message = "🎉 You win! You won " . $game['bet'] . " coins!";
+        $messageType = "success";
+    } elseif ($playerValue < $dealerValue) {
+        // Dealer wins
+        $message = "😞 Dealer wins. You lost " . $game['bet'] . " coins.";
+        $messageType = "error";
+    } else {
+        // Push
+        $winAmount = $game['bet'];
+        $message = "🤝 Push! Bet returned.";
+        $messageType = "success";
+    }
+
+    $game['game_over'] = true;
+    
+    return [$game, $winAmount, $message, $messageType];
+}
+
 // Game logic
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['start_game'])) {
@@ -157,13 +197,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $playerValue = calculateHandValue($game['player_hand']);
 
-            if ($playerValue >= 21) {
+            if ($playerValue > 21) {
+                // Player busts
+                $message = "💥 Bust! You lost " . $game['bet'] . " coins.";
+                $messageType = "error";
+                $game['game_over'] = true;
                 $game['player_turn'] = false;
-
-                if ($playerValue > 21) {
-                    $message = "💥 Bust! You lost " . $game['bet'] . " coins.";
-                    $messageType = "error";
-                    $game['game_over'] = true;
+            } elseif ($playerValue == 21) {
+                // Player gets 21 - automatically stand and process dealer turn
+                $game['player_turn'] = false;
+                
+                list($game, $winAmount, $message, $messageType) = processDealerTurn($game);
+                
+                if ($winAmount > 0) {
+                    $newCoins = $userCoins + $winAmount;
+                    $stmt = $conn->prepare("UPDATE users SET coins = ? WHERE email = ?");
+                    $stmt->bind_param("is", $newCoins, $userEmail);
+                    $stmt->execute();
+                    $stmt->close();
+                    $userCoins = $newCoins;
                 }
             }
 
@@ -176,38 +228,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$game['game_over'] && $game['player_turn']) {
             $game['player_turn'] = false;
 
-            // Dealer hits until 17 or higher
-            while (calculateHandValue($game['dealer_hand']) < 17) {
-                $card = array_shift($game['deck']);
-                $game['dealer_hand'][] = $card;
-            }
-
-            $playerValue = calculateHandValue($game['player_hand']);
-            $dealerValue = calculateHandValue($game['dealer_hand']);
-
-            $winAmount = 0;
-
-            if ($dealerValue > 21) {
-                // Dealer bust
-                $winAmount = $game['bet'] * 2;
-                $message = "🎉 Dealer bust! You won " . $game['bet'] . " coins!";
-                $messageType = "success";
-            } elseif ($playerValue > $dealerValue) {
-                // Player wins
-                $winAmount = $game['bet'] * 2;
-                $message = "🎉 You win! You won " . $game['bet'] . " coins!";
-                $messageType = "success";
-            } elseif ($playerValue < $dealerValue) {
-                // Dealer wins
-                $message = "😞 Dealer wins. You lost " . $game['bet'] . " coins.";
-                $messageType = "error";
-            } else {
-                // Push
-                $winAmount = $game['bet'];
-                $message = "🤝 Push! Bet returned.";
-                $messageType = "success";
-            }
-
+            list($game, $winAmount, $dealerMessage, $dealerMessageType) = processDealerTurn($game);
+            
             if ($winAmount > 0) {
                 $newCoins = $userCoins + $winAmount;
                 $stmt = $conn->prepare("UPDATE users SET coins = ? WHERE email = ?");
@@ -217,7 +239,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $userCoins = $newCoins;
             }
 
-            $game['game_over'] = true;
+            $message = $dealerMessage;
+            $messageType = $dealerMessageType;
             $_SESSION['blackjack'] = $game;
         }
     } elseif (isset($_POST['new_game'])) {
@@ -354,7 +377,8 @@ $game = $_SESSION['blackjack'] ?? null;
                             </div>
                         <?php else: ?>
                             <div class="game-actions">
-                                <p><strong>Dealer is playing...</strong></p>
+                                <p><strong>Finalizing game...</strong></p>
+                                <meta http-equiv="refresh" content="1">
                             </div>
                         <?php endif; ?>
                     <?php else: ?>
