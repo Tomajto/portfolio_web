@@ -1061,6 +1061,7 @@ header {
 
 .bet-controls {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
@@ -1115,6 +1116,7 @@ header {
 /* Mobile responsive fixes */
 @media (max-width: 768px) {
     .bet-controls {
+      flex-direction: column;
         gap: 0.3rem;
         padding: 0 1rem;
     }
