@@ -25,7 +25,7 @@ if ($isLoggedIn) {
         <nav class="nav-links">
             <a href="../screens/slots.php">Slots</a>
             <a href="../screens/ride_the_bus.php">Ride the bus</a>
-            <a href="../screens/leaderboard.php">Roulette</a>
+            <a href="../screens/black_jack.php">Black jack</a>
             <a href="../screens/leaderboard.php">Leaderboard</a>
         </nav>
         
@@ -51,7 +51,7 @@ if ($isLoggedIn) {
         <ul>
             <li><a href="../screens/slots.php">Slots</a></li>
             <li><a href="../screens/ride_the_bus.php">Ride the bus</a></li>
-            <li><a href="../screens/leaderboard.php">Roulette</a></li>
+            <li><a href="../screens/black_jack.php">Black jack</a></li>
             <li><a href="../screens/leaderboard.php">Leaderboard</a></li>
             
             <?php if ($isLoggedIn): ?>

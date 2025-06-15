@@ -916,7 +916,6 @@ header {
   transform: scale(0.95);
 }
 
-/* =============== BET AMOUNT LABEL =============== */
 .bet-amount-label {
   margin-bottom: 0.5rem;
   text-align: center;
@@ -929,6 +928,217 @@ header {
   font-weight: 600;
 }
 
+.blackjack-container {
+    max-width: 800px;
+    text-align: center;
+}
+
+.game-section {
+    background: #1a5f1a;
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 1.5rem 0;
+    color: white;
+}
+
+.game-info {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.hand-section {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.hand-section h3 {
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    border: 2px solid #333;
+    border-radius: 10px;
+    padding: 0.8rem 0.6rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-width: 50px;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card.red {
+    color: #dc2626;
+}
+
+.card.black {
+    color: #333;
+}
+
+.card.hidden {
+    background: #4a5568;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.hand-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    color: #ffd700;
+}
+
+.game-actions {
+    margin: 2rem 0;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+}
+
+.hit-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.hit-btn:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+.stand-btn {
+    background: #16a34a;
+    color: white;
+}
+
+.stand-btn:hover {
+    background: #15803d;
+    transform: translateY(-2px);
+}
+
+.new-game-btn {
+    background: linear-gradient(135deg, #6b21a8, #4c1d95);
+    color: white;
+}
+
+.new-game-btn:hover {
+    transform: translateY(-2px);
+}
+
+.betting-section {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 15px;
+    margin: 1.5rem 0;
+}
+
+.bet-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.bet-btn {
+    background: #6b21a8;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    min-width: 45px;
+}
+
+.bet-btn:hover {
+    background: #4c1d95;
+}
+
+.bet-input {
+    width: 80px;
+    padding: 0.5rem;
+    border: 2px solid #6b21a8;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0.5rem;
+}
+
+.start-btn {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: 100%;
+    max-width: 200px;
+}
+
+.start-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .cards-container {
+        gap: 0.3rem;
+    }
+    
+    .card {
+        min-width: 40px;
+        min-height: 60px;
+        font-size: 1rem;
+        padding: 0.6rem 0.4rem;
+    }
+    
+    .game-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .action-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .bet-controls {
+        gap: 0.3rem;
+    }
+}
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
   .all-in-btn {

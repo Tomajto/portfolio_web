@@ -10,7 +10,7 @@
                 <ul class="footer-links">
                     <li><a href="/screens/slots.php">Slots</a></li>
                     <li><a href="/screens/ride_the_bus.php">Ride the bus</a></li>
-                    <li><a href="/screens/leaderboard.php">Roulette</a></li>
+                    <li><a href="/screens/black_jack.php">Black jack</a></li>
                     <li><a href="/screens/leaderboard.php">Leaderboard</a></li>
                 </ul>
             </div>
