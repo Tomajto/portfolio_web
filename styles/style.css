@@ -1072,12 +1072,29 @@ header {
     background: #6b21a8;
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.8rem;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.2s;
     min-width: 45px;
+    font-size: 0.9rem;
+}
+
+.bet-btn.red {
+    background: #dc2626;
+}
+
+.bet-btn.red:hover {
+    background: #b91c1c;
+}
+
+.bet-btn.green {
+    background: #16a34a;
+}
+
+.bet-btn.green:hover {
+    background: #15803d;
 }
 
 .bet-btn:hover {
@@ -1085,58 +1102,77 @@ header {
 }
 
 .bet-input {
-    width: 80px;
-    padding: 0.5rem;
+    width: 70px;
+    padding: 0.5rem 0.3rem;
     border: 2px solid #6b21a8;
     border-radius: 8px;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    margin: 0 0.5rem;
+    margin: 0 0.3rem;
 }
 
-.start-btn {
-    background: linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.2s;
-    width: 100%;
-    max-width: 200px;
-}
-
-.start-btn:hover:not(:disabled) {
-    transform: translateY(-2px);
-}
-
+/* Mobile responsive fixes */
 @media (max-width: 768px) {
-    .cards-container {
-        gap: 0.3rem;
-    }
-    
-    .card {
-        min-width: 40px;
-        min-height: 60px;
-        font-size: 1rem;
-        padding: 0.6rem 0.4rem;
-    }
-    
-    .game-actions {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .action-btn {
-        width: 100%;
-        max-width: 200px;
-    }
-    
     .bet-controls {
         gap: 0.3rem;
+        padding: 0 1rem;
+    }
+    
+    .bet-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.8rem;
+        min-width: 40px;
+    }
+    
+    .bet-input {
+        width: 60px;
+        padding: 0.4rem 0.2rem;
+        font-size: 0.9rem;
+        margin: 0 0.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .bet-controls {
+        gap: 0.2rem;
+        padding: 0 0.5rem;
+    }
+    
+    .bet-btn {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.75rem;
+        min-width: 35px;
+    }
+    
+    .bet-input {
+        width: 50px;
+        padding: 0.35rem 0.1rem;
+        font-size: 0.85rem;
+        margin: 0 0.1rem;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 350px) {
+    .bet-controls {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .bet-controls > div:first-child {
+        display: flex;
+        gap: 0.3rem;
+    }
+    
+    .bet-btn {
+        flex: 1;
+        max-width: 60px;
+    }
+    
+    .bet-input {
+        width: 80px;
+        margin: 0;
     }
 }
 /* Mobile responsive adjustments */

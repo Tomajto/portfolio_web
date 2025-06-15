@@ -263,14 +263,18 @@ $game = $_SESSION['blackjack'] ?? null;
             <?php if (!$game): ?>
                 <div class="betting-section">
                     <h3>Place Your Bet</h3>
-                    
+
                     <form method="POST" class="betting-form">
                         <div class="bet-controls">
-                            <button type="button" class="bet-btn red" onclick="adjustBet(-10)">-10</button>
-                            <button type="button" class="bet-btn red" onclick="adjustBet(-1)">-1</button>
+                            <div class="bet-buttons-group">
+                                <button type="button" class="bet-btn red" onclick="adjustBet(-10)">-10</button>
+                                <button type="button" class="bet-btn red" onclick="adjustBet(-1)">-1</button>
+                            </div>
                             <input type="number" name="bet_amount" id="betAmount" value="1" min="1" max="<?php echo $userCoins; ?>" class="bet-input">
-                            <button type="button" class="bet-btn green" onclick="adjustBet(1)">+1</button>
-                            <button type="button" class="bet-btn green" onclick="adjustBet(10)">+10</button>
+                            <div class="bet-buttons-group">
+                                <button type="button" class="bet-btn green" onclick="adjustBet(1)">+1</button>
+                                <button type="button" class="bet-btn green" onclick="adjustBet(10)">+10</button>
+                            </div>
                         </div>
                         <button type="submit" name="start_game" class="start-btn" <?php echo $userCoins <= 0 ? 'disabled' : ''; ?>>
                             🎮 Deal Cards
