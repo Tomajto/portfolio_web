@@ -1,10 +1,9 @@
 <?php
-$host = 'localhost'; // Database host
+$host = 'localhost';
 $dbname = getenv('DB_NAME');
 $username = getenv('DB_USER');
 $password = getenv('DB_PASS');
 
-// Create connection
 $conn = new mysqli($host, $username, $password, $dbname);
 
 if ($conn->connect_error) {

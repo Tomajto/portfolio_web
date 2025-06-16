@@ -1,11 +1,9 @@
 <?php
-// filepath: c:\PROJEKTY\portfolio_web\screens\leaderboard.php
 session_start();
 
 
 include_once __DIR__ . '/../database/db_connection.php';
 
-// Fetch top 10 users who have >0 coins
 $sql = "
     SELECT username, profile_pic, coins 
     FROM users 
@@ -21,7 +19,6 @@ if ($result) {
         $leaders[] = $row;
     }
 } else {
-    // Query error
     die("Query failed: " . $conn->error);
 }
 ?>

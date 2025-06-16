@@ -1,8 +1,6 @@
 <?php
-// filepath: c:\PROJEKTY\portfolio_web\screens\black_jack.php
 session_start();
 
-// Redirect to login if not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
@@ -14,7 +12,6 @@ $userEmail = $_SESSION['email'];
 $message = "";
 $messageType = "";
 
-// Get user's current coins
 $stmt = $conn->prepare("SELECT coins FROM users WHERE email = ?");
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();
@@ -23,7 +20,6 @@ $user = $result->fetch_assoc();
 $userCoins = (int)$user['coins'];
 $stmt->close();
 
-// Blackjack functions
 function createDeck()
 {
     $suits = ['♠️', '♥️', '♦️', '♣️'];
@@ -45,7 +41,6 @@ function getCardValue($card, $currentTotal = 0)
     if (in_array($card['value'], ['J', 'Q', 'K'])) {
         return 10;
     } elseif ($card['value'] === 'A') {
-        // Ace is 11 unless it would bust, then it's 1
         return ($currentTotal + 11 > 21) ? 1 : 11;
     } else {
         return (int)$card['value'];
@@ -68,7 +63,6 @@ function calculateHandValue($hand)
         }
     }
 
-    // Adjust for aces
     while ($total > 21 && $aces > 0) {
         $total -= 10;
         $aces--;
@@ -88,7 +82,6 @@ function displayCard($card, $hidden = false)
 }
 
 function processDealerTurn($game) {
-    // Dealer hits until 17 or higher
     while (calculateHandValue($game['dealer_hand']) < 17) {
         $card = array_shift($game['deck']);
         $game['dealer_hand'][] = $card;
@@ -102,21 +95,17 @@ function processDealerTurn($game) {
     $messageType = "";
 
     if ($dealerValue > 21) {
-        // Dealer bust
         $winAmount = $game['bet'] * 2;
         $message = "🎉 Dealer bust! You won " . $game['bet'] . " coins!";
         $messageType = "success";
     } elseif ($playerValue > $dealerValue) {
-        // Player wins
         $winAmount = $game['bet'] * 2;
         $message = "🎉 You win! You won " . $game['bet'] . " coins!";
         $messageType = "success";
     } elseif ($playerValue < $dealerValue) {
-        // Dealer wins
         $message = "😞 Dealer wins. You lost " . $game['bet'] . " coins.";
         $messageType = "error";
     } else {
-        // Push
         $winAmount = $game['bet'];
         $message = "🤝 Push! Bet returned.";
         $messageType = "success";
@@ -127,10 +116,10 @@ function processDealerTurn($game) {
     return [$game, $winAmount, $message, $messageType];
 }
 
-// Game logic
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['start_game'])) {
-        // Start new game
+
         $betAmount = (int)$_POST['bet_amount'];
 
         if ($betAmount <= 0 || $betAmount > $userCoins) {
@@ -139,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $deck = createDeck();
 
-            // Deal initial cards
             $playerHand = [$deck[0], $deck[2]];
             $dealerHand = [$deck[1], $deck[3]];
 
@@ -152,7 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'player_turn' => true
             ];
 
-            // Deduct bet from user coins
             $newCoins = $userCoins - $betAmount;
             $stmt = $conn->prepare("UPDATE users SET coins = ? WHERE email = ?");
             $stmt->bind_param("is", $newCoins, $userEmail);
@@ -160,18 +147,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->close();
             $userCoins = $newCoins;
 
-            // Check for blackjack
             $playerValue = calculateHandValue($playerHand);
             $dealerValue = calculateHandValue($dealerHand);
 
             if ($playerValue == 21) {
                 if ($dealerValue == 21) {
-                    // Push
                     $winAmount = $betAmount;
                     $message = "🤝 Push! Both have Blackjack. Bet returned.";
                     $messageType = "success";
                 } else {
-                    // Player blackjack
                     $winAmount = $betAmount + ($betAmount * 1.5);
                     $message = "🎉 BLACKJACK! You won " . ($betAmount * 1.5) . " coins!";
                     $messageType = "success";
@@ -188,7 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     } elseif (isset($_POST['hit']) && isset($_SESSION['blackjack'])) {
-        // Player hits
         $game = $_SESSION['blackjack'];
 
         if (!$game['game_over'] && $game['player_turn']) {
@@ -198,13 +181,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $playerValue = calculateHandValue($game['player_hand']);
 
             if ($playerValue > 21) {
-                // Player busts
                 $message = "💥 Bust! You lost " . $game['bet'] . " coins.";
                 $messageType = "error";
                 $game['game_over'] = true;
                 $game['player_turn'] = false;
             } elseif ($playerValue == 21) {
-                // Player gets 21 - automatically stand and process dealer turn
                 $game['player_turn'] = false;
                 
                 list($game, $winAmount, $message, $messageType) = processDealerTurn($game);
@@ -222,7 +203,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['blackjack'] = $game;
         }
     } elseif (isset($_POST['stand']) && isset($_SESSION['blackjack'])) {
-        // Player stands - dealer's turn
         $game = $_SESSION['blackjack'];
 
         if (!$game['game_over'] && $game['player_turn']) {
@@ -244,7 +224,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['blackjack'] = $game;
         }
     } elseif (isset($_POST['new_game'])) {
-        // Clear game session
         unset($_SESSION['blackjack']);
     }
 }
@@ -304,8 +283,6 @@ $game = $_SESSION['blackjack'] ?? null;
                         </button>
                     </form>
                 </div>
-
-                <!-- Game Rules -->
                 <div class="game-rules">
                     <h3>Blackjack Rules:</h3>
                     <ul>
@@ -317,13 +294,11 @@ $game = $_SESSION['blackjack'] ?? null;
                     </ul>
                 </div>
             <?php else: ?>
-                <!-- Game Phase -->
                 <div class="game-section">
                     <div class="game-info">
                         <p><strong>Bet:</strong> <?php echo $game['bet']; ?> coins</p>
                     </div>
 
-                    <!-- Dealer's Hand -->
                     <div class="hand-section">
                         <h3>Dealer's Hand</h3>
                         <div class="cards-container">
@@ -349,7 +324,6 @@ $game = $_SESSION['blackjack'] ?? null;
                         </div>
                     </div>
 
-                    <!-- Player's Hand -->
                     <div class="hand-section">
                         <h3>Your Hand</h3>
                         <div class="cards-container">
@@ -364,7 +338,6 @@ $game = $_SESSION['blackjack'] ?? null;
                         </div>
                     </div>
 
-                    <!-- Game Actions -->
                     <?php if (!$game['game_over']): ?>
                         <?php if ($game['player_turn']): ?>
                             <div class="game-actions">

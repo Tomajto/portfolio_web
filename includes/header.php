@@ -5,7 +5,6 @@ $isLoggedIn = isset($_SESSION['email']);
 $userProfilePic = null;
 
 if ($isLoggedIn) {
-    // Get user profile pic from database
     include_once 'database/db_connection.php';
     $stmt = $conn->prepare("SELECT profile_pic FROM users WHERE email = ?");
     $stmt->bind_param("s", $_SESSION['email']);

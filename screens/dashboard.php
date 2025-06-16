@@ -1,8 +1,6 @@
 <?php
-// filepath: c:\PROJEKTY\portfolio_web\screens\dashboard.php
 session_start();
 
-// Redirect to login if not logged in
 if (!isset($_SESSION['email'])) {
     header("Location: login.php");
     exit();
@@ -14,9 +12,7 @@ $userEmail = $_SESSION['email'];
 $message = "";
 $messageType = "";
 
-// Handle daily coin collection
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
-    // Get user's last collection time and current coins
     $stmt = $conn->prepare("SELECT last_coin_collection, coins FROM users WHERE email = ?");
     $stmt->bind_param("s", $userEmail);
     $stmt->execute();
@@ -48,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
     }
 
     if ($canCollect) {
-        // Add 50 coins and update last collection time
         $stmt = $conn->prepare("UPDATE users SET coins = coins + 50, last_coin_collection = NOW() WHERE email = ?");
         $stmt->bind_param("s", $userEmail);
 
@@ -61,17 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['collect_coins'])) {
         }
         $stmt->close();
 
-        // Redirect to prevent form resubmission
         header("Location: dashboard.php?collected=1");
         exit();
     }
 }
 
-// Handle profile picture upload
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
     $uploadDir = '../uploads/profile_pics/';
 
-    // Create directory if it doesn't exist
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
@@ -82,15 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
     $fileTmpName = $file['tmp_name'];
     $fileError = $file['error'];
 
-    // Get file extension
     $fileExt = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
     $allowedExt = ['jpg', 'jpeg', 'png', 'gif'];
 
     if ($fileError === 0) {
         if (in_array($fileExt, $allowedExt)) {
             if ($fileSize < 5000000) { // 5MB limit
-
-                // Get current profile picture before updating
                 $stmt = $conn->prepare("SELECT profile_pic FROM users WHERE email = ?");
                 $stmt->bind_param("s", $userEmail);
                 $stmt->execute();
@@ -99,17 +88,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
                 $oldProfilePic = $currentUser['profile_pic'];
                 $stmt->close();
 
-                // Generate unique filename
                 $newFileName = uniqid('profile_', true) . '.' . $fileExt;
                 $fileDestination = "{$uploadDir}{$newFileName}";
 
                 if (move_uploaded_file($fileTmpName, $fileDestination)) {
-                    // Update database with new profile picture
                     $stmt = $conn->prepare("UPDATE users SET profile_pic = ? WHERE email = ?");
                     $stmt->bind_param("ss", $newFileName, $userEmail);
 
                     if ($stmt->execute()) {
-                        // Delete old profile picture if it exists and it's not the default
                         if ($oldProfilePic && $oldProfilePic !== 'default-avatar.png') {
                             $oldFilePath = "{$uploadDir}{$oldProfilePic}";
                             if (file_exists($oldFilePath)) {
@@ -117,11 +103,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
                             }
                         }
 
-                        // Redirect to prevent form resubmission
                         header("Location: dashboard.php?uploaded=1");
                         exit();
                     } else {
-                        // If database update fails, remove the newly uploaded file
                         if (file_exists($fileDestination)) {
                             unlink($fileDestination);
                         }
@@ -147,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['profile_pic'])) {
     }
 }
 
-// Check for success messages from redirects
 if (isset($_GET['collected'])) {
     $message = "🎉 You collected 50 coins! Come back in 20 hours for more.";
     $messageType = "success";
@@ -157,22 +140,18 @@ if (isset($_GET['uploaded'])) {
     $messageType = "success";
 }
 
-// Get user info from database (ALWAYS fetch fresh data)
 $stmt = $conn->prepare("SELECT username, email, profile_pic, coins, last_coin_collection FROM users WHERE email = ?");
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();
 $result = $stmt->get_result();
 if ($result && $result->num_rows > 0) {
     $user = $result->fetch_assoc();
-    // Debug: Check what data we actually got
     error_log("User data fetched: " . print_r($user, true));
 
-    // Ensure coins is set to 0 if null
     if (!isset($user['coins']) || $user['coins'] === null) {
         $user['coins'] = 0;
     }
 } else {
-    // If user not found, redirect to login
     error_log("No user found for email: " . $userEmail);
     error_log("Session email: " . $userEmail);
     header("Location: login.php");
@@ -180,7 +159,6 @@ if ($result && $result->num_rows > 0) {
 }
 $stmt->close();
 
-// Check if user can collect coins
 $canCollectCoins = true;
 $timeUntilNextCollection = "";
 
@@ -229,7 +207,6 @@ if ($user['last_coin_collection']) {
                 </div>
             <?php endif; ?>
 
-            <!-- Profile Picture Section -->
             <div class="upload-section">
                 <img src="<?php echo !empty($user['profile_pic']) ? '../uploads/profile_pics/' . htmlspecialchars($user['profile_pic']) : '../assets/default-avatar.png'; ?>"
                     alt="Profile Picture"
@@ -252,7 +229,6 @@ if ($user['last_coin_collection']) {
                 </form>
             </div>
 
-            <!-- Account Info Section -->
             <?php
             $stmt = $conn->prepare("SELECT username, email, coins FROM users WHERE email = ?");
             $stmt->bind_param("s", $userEmail);
@@ -267,7 +243,6 @@ if ($user['last_coin_collection']) {
                 <p style="margin-bottom: 1rem;"><strong>Email:</strong> <?php echo htmlspecialchars($user['email'] ?? 'N/A'); ?></p>
                 <p style="margin-bottom: 1rem;"><strong>Coins:</strong> <span id="userCoins"><?php echo htmlspecialchars((int)($user['coins'] ?? 0)); ?></span> 🪙</p>
 
-                <!-- Daily Coin Collection -->
                 <div class="daily-coins-section">
                     <?php if ($canCollectCoins): ?>
                         <form method="POST" style="display: inline;">
@@ -297,17 +272,13 @@ if ($user['last_coin_collection']) {
             const profilePreview = document.getElementById('profilePreview');
 
             if (fileInput.files && fileInput.files[0]) {
-                // Show upload status
                 uploadStatus.style.display = 'block';
 
-                // Preview the selected image
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     profilePreview.src = e.target.result;
                 };
                 reader.readAsDataURL(fileInput.files[0]);
-
-                // Auto-submit the form
                 setTimeout(() => {
                     form.submit();
                 }, 500);

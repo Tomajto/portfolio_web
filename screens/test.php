@@ -2,7 +2,6 @@
 session_start();
 include '../database/db_connection.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['email'])) {
     echo "<h1>Not logged in</h1>";
     echo "<p><a href='login.php'>Please log in first</a></p>";
@@ -11,7 +10,6 @@ if (!isset($_SESSION['email'])) {
 
 $userEmail = $_SESSION['email'];
 
-// Fetch user data from database
 $stmt = $conn->prepare("SELECT username, email, coins, profile_pic FROM users WHERE email = ?");
 $stmt->bind_param("s", $userEmail);
 $stmt->execute();

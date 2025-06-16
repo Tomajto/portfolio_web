@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  // Prepare and execute - get both username and password
   $stmt = $conn->prepare("SELECT username, password FROM users WHERE email = ?");
   $stmt->bind_param("s", $email);
   $stmt->execute();
@@ -20,9 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $db_password = $user['password'];
     $username = $user['username'];
 
-    // Check if password is hashed or plain text
     if (password_verify($password, $db_password) || $password === $db_password) {
-      // Login successful
       $_SESSION['email'] = $email;
       $_SESSION['username'] = $username;
       header("Location: dashboard.php");
